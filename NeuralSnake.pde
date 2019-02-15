@@ -1,4 +1,5 @@
 public int size[] = {640, 360};
+public color backgroundColor = #000000
 
 Snake snek = new Snake();
 Snake snak = new Snake(snek);
@@ -9,7 +10,7 @@ void settings() {
 
 void setup() {
   frameRate(30);
-  background(125);
+  background(backgroundColor);
   
   snek.setPosition(320.0, 130.0);
   snek.setAngle(-PI/90);
@@ -22,6 +23,7 @@ void setup() {
 
 void draw() { 
   clear();
+  background(backgroundColor);
   snek.update(!snak.IsPassedThrough(snek.headPosition, snek.calculateNewPosition())); //<>//
   snak.update(!snek.IsPassedThrough(snak.headPosition, snak.calculateNewPosition()));
 }

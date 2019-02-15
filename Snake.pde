@@ -1,21 +1,11 @@
-public class Snake implements Hoverable {
+public class Snake extends Creature{
   private final float l;    //length
-  private final float v;    //velocity
-  private final float phi;  //field of view angle
-  private final float f;    //recognition constant
   private final float m;    //mutation constant
+  
+  color tailColor = #000000;
 
   float getL() {
     return l;
-  };
-  float getV() {
-    return v;
-  };
-  float getPhi() {
-    return phi;
-  };
-  float getF() {
-    return f;
   };
   float getM() {
     return m;
@@ -37,78 +27,48 @@ public class Snake implements Hoverable {
   };
 
   Snake() {
-    l = random(25.0, 125.0);
-    v = 125.0 / l;
-    phi = random(0, 2*PI);
-    f = -phi/(2*PI)+1;
+    super( random(1.0, 5.0), random(0, 2*PI) );
+    l = 125.0 / v;
     m = random(0.0, 1.0);
+    
+    FOVColor = headColor = color(0, int(random(128, 255)), 0);
+    tailColor = color(0, 0, int(random(128, 255)));
   };
 
-  Snake(float L, float V, float Phi, float F, float M) {
+  Snake(float L, float V, float Phi, float M) {
+    super( V, Phi );
     l = L;
-    v = V;
-    phi = Phi;
-    f = F;
     m = M;
+    
+    FOVColor = headColor = color(0, int(random(128, 255)), 0);
+    tailColor = color(0, 0, int(random(128, 255)));
   };
 
   Snake(Snake Parent) {
+    super();
     float[] mutatedValues = Mutate(Parent.getL(), Parent.getV(), Parent.getPhi(), Parent.getF(), Parent.getM());
     l = mutatedValues[0];
     v = mutatedValues[1];
     phi = mutatedValues[2];
     f = mutatedValues[3];
     m = mutatedValues[4];
+    
+    FOVColor = headColor = color(0, int(random(128, 255)), 0);
+    tailColor = color(0, 0, int(random(128, 255)));
   };
 
-  //Position should be separate class
-  Point headPosition = new Point(0, 0);
-  float delta, courseAngle = 0;
+  //Snake-specific drawing
   ArrayList<Point> Coords = new ArrayList<Point>();
-
+  
   void setPosition(float X, float Y) {
-    headPosition.x = X;
-    headPosition.y = Y;
+    super.setPosition(X, Y);
     Coords.add(headPosition.clone());
   };
   
-  Point calculateNewPosition() {
-    return new Point(
-      min(max(0, headPosition.x+v*cos(courseAngle)), size[0]),
-        min(max(0, headPosition.y+v*sin(courseAngle)), size[1])
-    );
-  };
-
-  void setAngle(float Delta) {
-    delta = Delta;
-  };
-
-  void update(boolean CanGoAhead) { 
-    if(CanGoAhead) {
-      courseAngle = (courseAngle+delta)%(2*PI);
-      headPosition.x = min(max(0, headPosition.x+v*cos(courseAngle)), size[0]);
-      headPosition.y = min(max(0, headPosition.y+v*sin(courseAngle)), size[1]);
-      
-      Coords.add(headPosition.clone());
-    }
-    
-    fill(#00FF00, 128);
-    noStroke();
-    beginShape(TRIANGLE_FAN);
-    vertex(headPosition.x,headPosition.y);
-    for(int i=0; i<10; i++)
-      vertex(headPosition.x+50*(f+0.5)*cos(courseAngle-phi/2+i*phi/10), 
-        headPosition.y+50*(f+0.5)*sin(courseAngle-phi/2+i*phi/10));
-    endShape();
-  
-    this.setAngle(random(-PI/6, PI/6)); //Random movement
-      
-    fill(#00FF00);
-    ellipse(headPosition.x, headPosition.y, 5, 5);
-      
+  void drawTail() {
     float distance = 0;
     noFill();
-    stroke(#0000FF);
+    stroke(tailColor);
     beginShape();
     curveVertex(Coords.get(Coords.size()-1).x, Coords.get(Coords.size()-1).y);
     for(int i=Coords.size()-2; i>-1; i--)
@@ -124,6 +84,24 @@ public class Snake implements Hoverable {
         }
       }
     endShape();
+  };
+
+  void update(boolean CanGoAhead) { 
+    if(CanGoAhead) {
+      courseAngle = (courseAngle+delta)%(2*PI);
+      headPosition.x = min(max(0, headPosition.x+v*cos(courseAngle)), size[0]);
+      headPosition.y = min(max(0, headPosition.y+v*sin(courseAngle)), size[1]);
+      
+      Coords.add(headPosition.clone());
+    }
+    
+    super.drawFOV();
+  
+    this.setAngle(brain.DecideAngle());
+      
+    super.drawHead();
+      
+    this.drawTail();
       
     float[] info = {l, v, phi, f, m};
     String[] infoNames = {"L", "V", "Phi", "F", "M"};
@@ -213,60 +191,4 @@ public class Snake implements Hoverable {
     return false;
   };
   
-  //Hoverable
-  void HoverInfo(float[] information, String[] informationNames) { 
-    float rectX=0, rectY=0, rectW=0, rectH=0;
-    textSize(10);
-    
-    if(abs(mouseX-headPosition.x)<25 && abs(mouseY-headPosition.y)<25) 
-    {
-        rectW = 50;
-        for(int i=0; i<information.length; i++)
-          if(rectW < informationNames[i].length()+10+80)
-            rectW = informationNames[i].length()+10+80;
-        rectH = information.length*12;
-        
-        if(headPosition.x>= size[0]/2) {
-           if(headPosition.y>=size[1]/2) {
-             rectX = headPosition.x - 10 - rectW;
-             rectY = headPosition.y - 10 - rectH;
-           }
-           else {
-             rectX = headPosition.x - 10 - rectW;
-             rectY = headPosition.y + 10;
-           }
-        }
-        else {
-           if(headPosition.y>=size[1]/2) {
-             rectX = headPosition.x + 10;
-             rectY = headPosition.y - 10 - rectH;
-           }
-           else {
-             rectX = headPosition.x +  10;
-             rectY = headPosition.y +  10;
-           }
-        }
-        
-        stroke(#FF00FF);
-        fill(255, 192);
-        rect(rectX, rectY, rectW, rectH, 2);
-        
-        for(int i=0; i<information.length; i++)
-        {
-           informationNames[i] += ": ";
-           float difference = rectW-90-informationNames[i].length()+2;
-           for(int j=0; j<difference; j++) 
-           {
-              informationNames[i] += " ";
-           }
-        }
-        
-        for(int i=0; i<information.length; i++)
-        {
-            fill(0, 0, 255);
-            text(informationNames[i]+information[i], rectX, rectY+((float)i/information.length)*rectH+10);
-        }
-    }
-      
-  };
 };
