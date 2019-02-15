@@ -103,7 +103,7 @@ public class Snake implements Hoverable {
         headPosition.y+50*(f+0.5)*sin(courseAngle-phi/2+i*phi/10));
     endShape();
   
-    this.setAngle(random(-PI/6, PI/6)); //AAAAA
+    //this.setAngle(random(-PI/6, PI/6)); //AAAAA
       
     fill(#00FF00);
     ellipse(headPosition.x, headPosition.y, 5, 5);
@@ -145,14 +145,10 @@ public class Snake implements Hoverable {
         snakePartStart = Coords.get(i);
         snakePartEnd = Coords.get(i+1);
         //Do the segments have interlocking intervals?
-        if ((max( min(start.x,end.x), min(snakePartStart.x,snakePartEnd.x) ) < min( max(start.x,end.x), max(snakePartStart.x,snakePartEnd.x) )) || 
-              (max( min(start.y,end.y), min(snakePartStart.y,snakePartEnd.y) ) < min( max(start.y,end.y), max(snakePartStart.y,snakePartEnd.y) ))) {
+        if ((max( min(start.x,end.x), min(snakePartStart.x,snakePartEnd.x) ) > min( max(start.x,end.x), max(snakePartStart.x,snakePartEnd.x) )) || 
+              (max( min(start.y,end.y), min(snakePartStart.y,snakePartEnd.y) ) > min( max(start.y,end.y), max(snakePartStart.y,snakePartEnd.y) ))) {
           continue;
-        }
-        
-        println("Close! ", i);  
-        
-        if (start.x == end.x)
+        } else if (start.x == end.x)
           //Colinear vertical lines
           if (snakePartStart.x == snakePartEnd.x) {
             if (start.x == snakePartStart.x)
@@ -162,9 +158,14 @@ public class Snake implements Hoverable {
             B2 = snakePartStart.y-A2*snakePartStart.x;
             Xi = start.x;
             Yi = A2*Xi+B2;
+            
+            //Shows the collision
+            fill(#FF0000);
+            ellipse(Xi, Yi, 15, 15);
+            
             if ( (Xi >= max( min(start.x,end.x), min(snakePartStart.x,snakePartEnd.x) )) &&
                  (Xi <= min( max(start.x,end.x), max(snakePartStart.x,snakePartEnd.x) )) &&
-                 (Yi <= min( max(start.y,end.y), max(snakePartStart.y,snakePartEnd.y) )) &&
+                 (Yi >= max( min(start.y,end.y), min(snakePartStart.y,snakePartEnd.y) )) &&
                  (Yi <= min( max(start.y,end.y), max(snakePartStart.y,snakePartEnd.y) )) )
               return true;
           } 
@@ -174,9 +175,14 @@ public class Snake implements Hoverable {
           B1 = start.y-A1*start.x;
           Xi = snakePartStart.x;
           Yi = A1*Xi+B1;
+          
+          //Shows the collision
+          fill(#FF0000);
+          ellipse(Xi, Yi, 15, 15);
+          
           if ( (Xi >= max( min(start.x,end.x), min(snakePartStart.x,snakePartEnd.x) )) &&
                  (Xi <= min( max(start.x,end.x), max(snakePartStart.x,snakePartEnd.x) )) &&
-                 (Yi <= min( max(start.y,end.y), max(snakePartStart.y,snakePartEnd.y) )) &&
+                 (Yi >= max( min(start.y,end.y), min(snakePartStart.y,snakePartEnd.y) )) &&
                  (Yi <= min( max(start.y,end.y), max(snakePartStart.y,snakePartEnd.y) )) )
               return true;
         }
@@ -192,11 +198,16 @@ public class Snake implements Hoverable {
           } else {
             Xi = (B2 - B1) / (A1 - A2);
             Yi = A1*Xi+B1;
+            
+            //Shows the collision
+            fill(#FF0000);
+            ellipse(Xi, Yi, 15, 15);
+            
             if ( (Xi >= max( min(start.x,end.x), min(snakePartStart.x,snakePartEnd.x) )) &&
                  (Xi <= min( max(start.x,end.x), max(snakePartStart.x,snakePartEnd.x) )) &&
-                 (Yi <= min( max(start.y,end.y), max(snakePartStart.y,snakePartEnd.y) )) &&
+                 (Yi >= max( min(start.y,end.y), min(snakePartStart.y,snakePartEnd.y) )) &&
                  (Yi <= min( max(start.y,end.y), max(snakePartStart.y,snakePartEnd.y) )) )
-              return true;
+                   return true;
           }
         }
       }

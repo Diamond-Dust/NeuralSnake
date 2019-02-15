@@ -19,6 +19,7 @@ void setup() {
   snek.setAngle(-PI/90);
   
   snak.setPosition(310.0, 120.0);
+  snak.setAngle(-PI/90);
   
   print(snek.getL(), snek.getV(), snek.getPhi(), snek.getF(), snek.getM());
 }
