@@ -90,9 +90,7 @@ public class Snake implements Hoverable {
       headPosition.y = min(max(0, headPosition.y+v*sin(courseAngle)), size[1]);
       
       Coords.add(headPosition.clone());
-    } else {
-      //print("[", headPosition.x, headPosition.y, "]", "[", min(max(0, headPosition.x+v*cos(courseAngle)), size[0]), min(max(0, headPosition.y+v*sin(courseAngle)), size[0]), "]", "\n");
-    };
+    }
     
     fill(#00FF00, 128);
     noStroke();
@@ -103,7 +101,7 @@ public class Snake implements Hoverable {
         headPosition.y+50*(f+0.5)*sin(courseAngle-phi/2+i*phi/10));
     endShape();
   
-    //this.setAngle(random(-PI/6, PI/6)); //AAAAA
+    this.setAngle(random(-PI/6, PI/6)); //Random movement
       
     fill(#00FF00);
     ellipse(headPosition.x, headPosition.y, 5, 5);

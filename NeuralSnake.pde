@@ -1,5 +1,3 @@
-PImage img;
-int smallPoint, largePoint;
 public int size[] = {640, 360};
 
 Snake snek = new Snake();
@@ -11,8 +9,6 @@ void settings() {
 
 void setup() {
   frameRate(30);
-  smallPoint = 4;
-  largePoint = 40;
   background(125);
   
   snek.setPosition(320.0, 130.0);
