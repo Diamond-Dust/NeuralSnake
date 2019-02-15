@@ -33,6 +33,8 @@ public class Snake extends Creature{
     
     FOVColor = headColor = color(0, int(random(128, 255)), 0);
     tailColor = color(0, 0, int(random(128, 255)));
+    
+    Coords.add(headPosition.clone());
   };
 
   Snake(float L, float V, float Phi, float M) {
@@ -42,6 +44,8 @@ public class Snake extends Creature{
     
     FOVColor = headColor = color(0, int(random(128, 255)), 0);
     tailColor = color(0, 0, int(random(128, 255)));
+    
+    Coords.add(headPosition.clone());
   };
 
   Snake(Snake Parent) {
@@ -55,6 +59,8 @@ public class Snake extends Creature{
     
     FOVColor = headColor = color(0, int(random(128, 255)), 0);
     tailColor = color(0, 0, int(random(128, 255)));
+    
+    Coords.add(headPosition.clone());
   };
 
   //Snake-specific drawing
@@ -87,19 +93,11 @@ public class Snake extends Creature{
   };
 
   void update(boolean CanGoAhead) { 
+    super.update(CanGoAhead);
+    
     if(CanGoAhead) {
-      courseAngle = (courseAngle+delta)%(2*PI);
-      headPosition.x = min(max(0, headPosition.x+v*cos(courseAngle)), size[0]);
-      headPosition.y = min(max(0, headPosition.y+v*sin(courseAngle)), size[1]);
-      
       Coords.add(headPosition.clone());
     }
-    
-    super.drawFOV();
-  
-    this.setAngle(brain.DecideAngle());
-      
-    super.drawHead();
       
     this.drawTail();
       
@@ -110,7 +108,7 @@ public class Snake extends Creature{
   
   //Does that pass through?
   boolean IsPassedThrough(Point start, Point end) {
-    if(Coords.size() < 2) //<>//
+    if(Coords.size() < 2)
       return false;
     else
     {

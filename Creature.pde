@@ -4,8 +4,8 @@ class Creature implements Hoverable {
   float f;    //recognition constant
   
   color headColor = #000000, FOVColor = #000000;
-  Point headPosition = new Point(0, 0);
-  float delta, courseAngle = 0;
+  Point headPosition = new Point(int(random(10, size[0])), int(random(10, size[1])));
+  float delta = PI/90, courseAngle = 0;
   
   Brain brain = new Brain();
   
@@ -30,6 +30,9 @@ class Creature implements Hoverable {
     return f;
   };
   
+  void setPosition(Point head) {
+    headPosition = head;
+  };
   void setPosition(float X, float Y) {
     headPosition.x = X;
     headPosition.y = Y;
@@ -46,7 +49,7 @@ class Creature implements Hoverable {
     delta = Delta;
   };
   
-  void drawFOV() {
+  void DrawFOV() {
     fill(FOVColor, 128);
     noStroke();
     beginShape(TRIANGLE_FAN);
@@ -57,9 +60,22 @@ class Creature implements Hoverable {
     endShape();
   };
   
-  void drawHead() {
+  void DrawHead() {
     fill(headColor);
     ellipse(headPosition.x, headPosition.y, 5, 5);
+  };
+  
+  void update(boolean CanGoAhead) {
+    if(CanGoAhead) {
+      courseAngle = (courseAngle+delta)%(2*PI);
+      headPosition.x = min(max(0, headPosition.x+v*cos(courseAngle)), size[0]);
+      headPosition.y = min(max(0, headPosition.y+v*sin(courseAngle)), size[1]);
+    }
+    
+    DrawFOV();  
+    DrawHead();
+  
+    this.setAngle(brain.DecideAngle());
   };
   
   //Hoverable
