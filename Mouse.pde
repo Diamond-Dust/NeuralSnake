@@ -2,7 +2,7 @@ class Mouse extends Creature {
   private final float m;    //mutation constant
   
   Mouse() {
-    super( random(1.0, 5.0), random(0, 2*PI) );
+    super( random(0, 2*PI),  LToVTimesPhiFToLConstant );
     
     m = random(0.0, 1.0);
     
