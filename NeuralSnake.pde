@@ -1,9 +1,6 @@
 public int size[] = {640, 360};
 public color backgroundColor = #000000;
-CreatureDen den = new CreatureDen(50);
-
-Snake snek = new Snake();
-Snake snak = new Snake(snek);
+CreatureDen den = new CreatureDen(5, 5);
 
 void settings() { 
   size(640, 360);

@@ -7,6 +7,12 @@ class CreatureDen {
     for(int i=0; i<numberOfSnakes; i++)
       creatures.add(new Snake());
   };
+  CreatureDen(int numberOfSnakes, int numberOfMice) {
+    for(int i=0; i<numberOfSnakes; i++)
+      creatures.add(new Snake());
+    for(int i=0; i<numberOfMice; i++)
+      creatures.add(new Mouse());
+  };
   
   void update() {
     boolean CanGoAhead; //<>//

@@ -1,4 +1,8 @@
+private final float LToVTimesPhiFToLConstant = PI/2.0; //Sanity constant
+private final float LToVConstant = 125.0; //Sanity constant
+
 public class Snake extends Creature{
+  
   private final float l;    //length
   private final float m;    //mutation constant
   
@@ -16,19 +20,19 @@ public class Snake extends Creature{
     float VtoLRatio = V*L;
     float PhiLtoFRatio = Phi*F/L;
 
-    mutatedValues[1] = constrain(V+random((-M*V), (M*V)), 1, 5);
-    mutatedValues[0] = VtoLRatio/mutatedValues[1];
-    PhiLtoFRatio *= mutatedValues[0];
     mutatedValues[2] = constrain(Phi+random((-M*Phi), (M*Phi)), 0, 2*PI);
-    mutatedValues[3] = PhiLtoFRatio/mutatedValues[2];
+    mutatedValues[3] = -mutatedValues[2]/(2*PI)+(F+Phi/(2*PI));
+    mutatedValues[0] = mutatedValues[2]*mutatedValues[3]/PhiLtoFRatio;
+    mutatedValues[1] = VtoLRatio/mutatedValues[0];
+    
     mutatedValues[4] = constrain(M+random((-M*M), (M*M)), 0, 1);
 
     return mutatedValues;
   };
 
   Snake() {
-    super( random(1.0, 5.0), random(0, 2*PI) );
-    l = 125.0 / v;
+    super( random(0, 2*PI),  LToVTimesPhiFToLConstant );
+    l = LToVConstant / v;
     m = random(0.0, 1.0);
     
     FOVColor = headColor = color(0, int(random(128, 255)), 0);
@@ -36,7 +40,6 @@ public class Snake extends Creature{
     
     Coords.add(headPosition.clone());
   };
-
   Snake(float L, float V, float Phi, float M) {
     super( V, Phi );
     l = L;
@@ -47,7 +50,6 @@ public class Snake extends Creature{
     
     Coords.add(headPosition.clone());
   };
-
   Snake(Snake Parent) {
     super();
     float[] mutatedValues = Mutate(Parent.getL(), Parent.getV(), Parent.getPhi(), Parent.getF(), Parent.getM());

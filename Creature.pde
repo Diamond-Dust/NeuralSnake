@@ -14,11 +14,16 @@ class Creature implements Hoverable {
     phi = 0.0;
     f = 0.0;
   };
-  Creature(float V, float Phi) {
+  /*Creature(float V, float Phi) {
     v = V;
     phi = Phi;
     f = -phi/(2*PI)+1;
-  };
+  };*/
+  Creature(float Phi, float LToVTimesPhiFToLConstant) {
+    phi = Phi;
+    f = -phi/(2*PI)+1.05;
+    v = LToVTimesPhiFToLConstant/(phi*f);
+  }
   
   float getV() {
     return v;
