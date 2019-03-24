@@ -114,77 +114,38 @@ public class Snake extends Creature{
       return false;
     else
     {
-      float A1, A2, B1, B2, Xi, Yi;
-      Point snakePartStart, snakePartEnd; //<>//
+      Point P; //<>//
+      Segment snakePart = new Segment(), checkedPart = new Segment(start, end);
       for(int i=0; i<Coords.size()-1; i++)
       {
-        snakePartStart = Coords.get(i);
-        snakePartEnd = Coords.get(i+1);
-        //Do the segments have interlocking intervals?
-        if ((max( min(start.x,end.x), min(snakePartStart.x,snakePartEnd.x) ) > min( max(start.x,end.x), max(snakePartStart.x,snakePartEnd.x) )) || 
-              (max( min(start.y,end.y), min(snakePartStart.y,snakePartEnd.y) ) > min( max(start.y,end.y), max(snakePartStart.y,snakePartEnd.y) ))) {
-          continue;
-        } else if (start.x == end.x)
-          //Colinear vertical lines
-          if (snakePartStart.x == snakePartEnd.x) {
-            if (start.x == snakePartStart.x)
-              return true;
-          } else {
-            A2 = (snakePartStart.y-snakePartEnd.y)/(snakePartStart.x-snakePartEnd.x);
-            B2 = snakePartStart.y-A2*snakePartStart.x;
-            Xi = start.x;
-            Yi = A2*Xi+B2;
-            
-            //Shows the collision
-            fill(#FF0000);
-            ellipse(Xi, Yi, 15, 15);
-            
-            if ( (Xi >= max( min(start.x,end.x), min(snakePartStart.x,snakePartEnd.x) )) &&
-                 (Xi <= min( max(start.x,end.x), max(snakePartStart.x,snakePartEnd.x) )) &&
-                 (Yi >= max( min(start.y,end.y), min(snakePartStart.y,snakePartEnd.y) )) &&
-                 (Yi <= min( max(start.y,end.y), max(snakePartStart.y,snakePartEnd.y) )) )
-              return true;
-          } 
-        else if (snakePartStart.x == snakePartEnd.x) {
-          //Colinear askew lines
-          A1 = (start.y-end.y)/(start.x-end.x);
-          B1 = start.y-A1*start.x;
-          Xi = snakePartStart.x;
-          Yi = A1*Xi+B1;
-          
+        snakePart.Set(Coords.get(i), Coords.get(i+1));
+        P = snakePart.WhereIsIntersecting(checkedPart);
+        if(P != null) {
           //Shows the collision
           fill(#FF0000);
-          ellipse(Xi, Yi, 15, 15);
-          
-          if ( (Xi >= max( min(start.x,end.x), min(snakePartStart.x,snakePartEnd.x) )) &&
-                 (Xi <= min( max(start.x,end.x), max(snakePartStart.x,snakePartEnd.x) )) &&
-                 (Yi >= max( min(start.y,end.y), min(snakePartStart.y,snakePartEnd.y) )) &&
-                 (Yi <= min( max(start.y,end.y), max(snakePartStart.y,snakePartEnd.y) )) )
-              return true;
+          ellipse(P.x, P.y, 15, 15);
+          return true;
         }
-        else {
-          A1 = (start.y-end.y)/(start.x-end.x);
-          A2 = (snakePartStart.y-snakePartEnd.y)/(snakePartStart.x-snakePartEnd.x);
-          B1 = start.y-A1*start.x;
-          B2 = snakePartStart.y-A2*snakePartStart.x;
-          
-          //Colinear segments
-          if (A1 == A2) {
-            return true;
-          } else {
-            Xi = (B2 - B1) / (A1 - A2);
-            Yi = A1*Xi+B1;
-            
-            //Shows the collision
-            fill(#FF0000);
-            ellipse(Xi, Yi, 15, 15);
-            
-            if ( (Xi >= max( min(start.x,end.x), min(snakePartStart.x,snakePartEnd.x) )) &&
-                 (Xi <= min( max(start.x,end.x), max(snakePartStart.x,snakePartEnd.x) )) &&
-                 (Yi >= max( min(start.y,end.y), min(snakePartStart.y,snakePartEnd.y) )) &&
-                 (Yi <= min( max(start.y,end.y), max(snakePartStart.y,snakePartEnd.y) )) )
-                   return true;
-          }
+      }
+    }
+    return false;
+  };
+  boolean IsPassedThrough(Segment checkedPart) {
+    if(Coords.size() < 2)
+      return false;
+    else
+    {
+      Point P;
+      Segment snakePart = new Segment();
+      for(int i=0; i<Coords.size()-1; i++)
+      {
+        snakePart.Set(Coords.get(i), Coords.get(i+1));
+        P = snakePart.WhereIsIntersecting(checkedPart);
+        if(P != null) {
+          //Shows the collision
+          fill(#FF0000);
+          ellipse(P.x, P.y, 15, 15);
+          return true;
         }
       }
     }

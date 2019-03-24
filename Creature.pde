@@ -1,4 +1,4 @@
-class Creature implements Hoverable {
+abstract class Creature implements Hoverable {
   float v;    //velocity
   float phi;  //field of view angle
   float f;    //recognition constant
@@ -14,11 +14,6 @@ class Creature implements Hoverable {
     phi = 0.0;
     f = 0.0;
   };
-  /*Creature(float V, float Phi) {
-    v = V;
-    phi = Phi;
-    f = -phi/(2*PI)+1;
-  };*/
   Creature(float Phi, float LToVTimesPhiFToLConstant) {
     phi = Phi;
     f = -phi/(2*PI)+1.05;

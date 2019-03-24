@@ -15,7 +15,7 @@ class CreatureDen {
   };
   
   void update() {
-    boolean CanGoAhead; //<>//
+    boolean CanGoAhead; //<>// //<>// //<>//
     Point currentHeadPosition, futureHeadPosition;
     Creature currentCreature, currentPossibleSnake;
     
