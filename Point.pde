@@ -11,6 +11,14 @@ public class Point {
     y = P.y;
   };
   
+  float DistanceTo(Point P) {
+    return sqrt(sq(P.x-x)+sq(P.y-y));
+  }
+  
+  Point Translate(PVector V) {
+    return new Point(x+V.x, y+V.y);
+  };
+  
   Point clone() {
     return new Point(this);
   }
