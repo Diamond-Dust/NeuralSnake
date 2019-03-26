@@ -122,8 +122,7 @@ public class Snake extends Creature{
         P = snakePart.WhereIsIntersecting(checkedPart);
         if(P != null) {
           //Shows the collision
-          fill(#FF0000);
-          ellipse(P.x, P.y, 15, 15);
+          P.Draw(#FF0000, 15);
           return true;
         }
       }

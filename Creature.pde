@@ -67,8 +67,7 @@ abstract class Creature implements Hoverable {
   };
   
   void DrawHead() {
-    fill(headColor);
-    ellipse(headPosition.x, headPosition.y, 5, 5);
+    headPosition.Draw(headColor, 5);
   };
   
   void update(boolean CanGoAhead) {
