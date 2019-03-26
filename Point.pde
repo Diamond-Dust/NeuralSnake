@@ -19,6 +19,11 @@ public class Point {
     return new Point(x+V.x, y+V.y);
   };
   
+  void Draw(color c, int size) {
+    fill(c);
+    ellipse(x, y, size, size);
+  };
+  
   Point clone() {
     return new Point(this);
   }
@@ -27,6 +32,10 @@ public class Point {
     return "(" + x + ", " + y + ")";
   };
   
+  Point() {
+    x = 0;
+    y = 0;
+  };
   Point(float X, float Y) {
     x = X;
     y = Y;

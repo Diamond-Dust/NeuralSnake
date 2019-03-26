@@ -54,9 +54,15 @@ abstract class Creature implements Hoverable {
     noStroke();
     beginShape(TRIANGLE_FAN);
     vertex(headPosition.x,headPosition.y);
-    for(int i=0; i<10; i++)
-      vertex(headPosition.x+50*(f+0.5)*cos(courseAngle-phi/2+i*phi/10), 
-        headPosition.y+50*(f+0.5)*sin(courseAngle-phi/2+i*phi/10));
+    Point P = new Point();
+    Ray R = new Ray();
+    for(int i=0; i<10; i++) {
+      P.Set(headPosition.x+50*(f+0.5)*cos(courseAngle-phi/2+i*phi/10),
+              headPosition.y+50*(f+0.5)*sin(courseAngle-phi/2+i*phi/10));
+      vertex(P.x, P.y);
+      R.Set(headPosition, P);
+      R.Draw(#FFFF00);
+    }
     endShape();
   };
   

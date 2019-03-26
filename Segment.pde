@@ -23,6 +23,11 @@ public class Segment {
     End = S.End.clone();
   };
   
+  void Draw(color c) {
+    stroke(c);
+    line(Start.x, Start.y, End.x, End.y);
+  }
+  
   Segment clone() {
     return new Segment(this);
   }
