@@ -18,9 +18,11 @@ class CreatureDen {
     boolean CanGoAhead; //<>// //<>// //<>//
     Point currentHeadPosition, futureHeadPosition;
     Creature currentCreature, currentPossibleSnake;
+    ArrayList<Point> Sightings = new ArrayList<Point>();
     
     for(int i=0; i<creatures.size(); i++)
     {
+      Sightings.clear();
       CanGoAhead = true;
       currentCreature = creatures.get(i);
       currentHeadPosition = currentCreature.headPosition;
@@ -28,14 +30,22 @@ class CreatureDen {
       
       for(int j=0; j<creatures.size(); j++)
       {
-        currentPossibleSnake = creatures.get(j);
-        if(currentPossibleSnake instanceof Snake && i != j)
-          CanGoAhead = !((Snake)currentPossibleSnake).IsPassedThrough(currentHeadPosition, futureHeadPosition);
-        if(!CanGoAhead)
-          break;
+        if(i != j) {
+          currentPossibleSnake = creatures.get(j);
+        
+          if(currentCreature.IsSeen(currentPossibleSnake))
+            Sightings.add(currentPossibleSnake.headPosition);
+        
+          if(currentPossibleSnake instanceof Snake && CanGoAhead)
+            CanGoAhead = !((Snake)currentPossibleSnake).IsPassedThrough(currentHeadPosition, futureHeadPosition);
+          if(!CanGoAhead)
+            continue;
+
+        }
       }
       
       currentCreature.update(CanGoAhead);
+      currentCreature.GetSightings(Sightings);
     }
   };
 };

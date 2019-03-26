@@ -20,8 +20,10 @@ public class Point {
   };
   
   void Draw(color c, int size) {
+    stroke(c);
     fill(c);
     ellipse(x, y, size, size);
+    //noFill();
   };
   
   Point clone() {

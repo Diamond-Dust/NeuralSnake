@@ -15,9 +15,9 @@ public class Line {
     C = -A*Through.x-B*Through.y;
   };
   Line(Point P1, Point P2) {
-    A = P2.y-P1.y;
+    A = P1.y-P2.y;
     B = P2.x-P1.x;
-    C = B*P1.y - A*P1.x;
+    C = -B*P1.y - A*P1.x;
   };
   Line(Line L) {
     A = L.A;
@@ -36,9 +36,9 @@ public class Line {
     C = -A*Through.x-B*Through.y;
   };
   void Set(Point P1, Point P2) {
-    A = P2.y-P1.y;
+    A = P1.y-P2.y;
     B = P2.x-P1.x;
-    C = B*P1.y - A*P1.x;
+    C = -B*P1.y - A*P1.x;
   };
   void Set(Line L) {
     A = L.A;
@@ -65,6 +65,7 @@ public class Line {
       Coord = -(A*size[0]+C)/B;
       line(0, -C/B, size[0], Coord);
     }
+    noStroke();
   };
   
   

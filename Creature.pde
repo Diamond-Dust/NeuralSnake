@@ -4,8 +4,10 @@ abstract class Creature implements Hoverable {
   float f;    //recognition constant
   
   color headColor = #000000, FOVColor = #000000;
-  Point headPosition = new Point(int(random(10, size[0])), int(random(10, size[1])));
+  Point headPosition = new Point(int(random(safetyMargin, size[0])), int(random(safetyMargin, size[1])));
   float delta = PI/90, courseAngle = 0;
+  
+  Ray[] Rays = new Ray[rayNumber];
   
   Brain brain = new Brain();
   
@@ -13,11 +15,17 @@ abstract class Creature implements Hoverable {
     v = 0.0;
     phi = 0.0;
     f = 0.0;
+    for (int i=0; i<rayNumber; i++) {
+      Rays[i] = new Ray();
+    }
   };
   Creature(float Phi, float LToVTimesPhiFToLConstant) {
     phi = Phi;
     f = -phi/(2*PI)+1.05;
     v = LToVTimesPhiFToLConstant/(phi*f);
+    for (int i=0; i<rayNumber; i++) {
+      Rays[i] = new Ray();
+    }
   }
   
   float getV() {
@@ -55,13 +63,12 @@ abstract class Creature implements Hoverable {
     beginShape(TRIANGLE_FAN);
     vertex(headPosition.x,headPosition.y);
     Point P = new Point();
-    Ray R = new Ray();
-    for(int i=0; i<10; i++) {
-      P.Set(headPosition.x+50*(f+0.5)*cos(courseAngle-phi/2+i*phi/10),
-              headPosition.y+50*(f+0.5)*sin(courseAngle-phi/2+i*phi/10));
+    for(int i=0; i<rayNumber; i++) {
+      P.Set(headPosition.x+FOVBaseSize*(f+0.5)*cos(courseAngle-phi/2+i*phi/rayNumber),
+              headPosition.y+FOVBaseSize*(f+0.5)*sin(courseAngle-phi/2+i*phi/rayNumber));
       vertex(P.x, P.y);
-      R.Set(headPosition, P);
-      R.Draw(#FFFF00);
+      //Rays[i].Set(headPosition, P);
+      //Rays[i].Draw(#FFFF00);
     }
     endShape();
   };
@@ -81,6 +88,30 @@ abstract class Creature implements Hoverable {
     DrawHead();
   
     this.setAngle(brain.DecideAngle());
+  };
+  
+  void GetSightings(ArrayList<Point> Sightings) {
+    /*for(int i=0; i<Sightings.size(); i++) {
+      Sightings.get(i).Draw(#00FFFF, 30);
+    }*/
+    brain.GetSightings(Sightings);
+  };
+  
+  public boolean IsSeen(Creature C) {
+    boolean IS = false;
+    for(int i=0; i< rayNumber; i++) {
+      if(Rays[i].CheckIfInFrontAndInInterval(C.headPosition, sightInterval))
+        IS = true;
+    }
+    return IS;
+  };
+  public boolean IsSeen(Point P) {
+    boolean IS = false;
+    for(int i=0; i< rayNumber; i++) {
+      if(Rays[i].CheckIfInFrontAndInInterval(P, sightInterval))
+        IS = true;
+    }
+    return IS;
   };
   
   //Hoverable

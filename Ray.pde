@@ -1,6 +1,6 @@
 public class Ray extends Line{
-  Point Start;
-  PVector Versor;
+  Point Start = new Point();
+  PVector Versor = new PVector();
   
   Ray() {
     super();
@@ -23,8 +23,8 @@ public class Ray extends Line{
   };
   Ray(Ray R) {
     super(R.Start, R.Start.Translate(R.Versor));
-    Start = R.Start;
-    Versor = R.Versor;
+    Start = R.Start.clone();
+    Versor = R.Versor.copy();
   };
   
   void Set(Point start, Point on) {
@@ -47,19 +47,16 @@ public class Ray extends Line{
   };
   
   public boolean CheckIfInFront(Point P) {
-    Point T = Start.Translate(Versor);
-    Line L = new Line(Versor, Start);
-    if(T.DistanceTo(P) <= L.CalculateDistance(P)) {
-      return true;
-    }
-    else {
-      return false;  
-    }
+    return cos(PVector.angleBetween(Versor, new PVector(P.x-Start.x, P.y-Start.y))) > 0;
   };
   
   public boolean CheckIfInFrontAndInInterval(Point P, float Interval) {
     if(CheckIfInFront(P)) {
       if(super.CalculateDistance(P) <= Interval) {
+        //strokeWeight(sightInterval);
+        //Draw(#FF00FF);
+        //super.Draw(#F0F0F0);
+        //strokeWeight(1);
         return true;
       }
       else {
@@ -76,5 +73,7 @@ public class Ray extends Line{
     Point Coord = Start.Translate(Versor.mult(maxLength));
     stroke(c);
     line(Start.x, Start.y, Coord.x, Coord.y);
+    //super.Draw(#F0F0F0);
+    noStroke();
   };
 }

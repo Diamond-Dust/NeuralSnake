@@ -26,6 +26,7 @@ public class Segment {
   void Draw(color c) {
     stroke(c);
     line(Start.x, Start.y, End.x, End.y);
+    noStroke();
   }
   
   Segment clone() {
