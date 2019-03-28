@@ -15,10 +15,10 @@ class CreatureDen {
   };
   
   void update() {
-    boolean CanGoAhead; //<>// //<>// //<>//
+    boolean CanGoAhead; //<>//
     Point currentHeadPosition, futureHeadPosition;
     Creature currentCreature, currentPossibleSnake;
-    ArrayList<Point> Sightings = new ArrayList<Point>();
+    ArrayList<Sighting> Sightings = new ArrayList<Sighting>();
     
     for(int i=0; i<creatures.size(); i++)
     {
@@ -34,7 +34,7 @@ class CreatureDen {
           currentPossibleSnake = creatures.get(j);
         
           if(currentCreature.IsSeen(currentPossibleSnake))
-            Sightings.add(currentPossibleSnake.headPosition);
+            Sightings.add(new Sighting(currentCreature, currentPossibleSnake));
         
           if(currentPossibleSnake instanceof Snake && CanGoAhead)
             CanGoAhead = !((Snake)currentPossibleSnake).IsPassedThrough(currentHeadPosition, futureHeadPosition);

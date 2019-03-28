@@ -90,7 +90,7 @@ abstract class Creature implements Hoverable {
     this.setAngle(brain.DecideAngle());
   };
   
-  void GetSightings(ArrayList<Point> Sightings) {
+  void GetSightings(ArrayList<Sighting> Sightings) {
     /*for(int i=0; i<Sightings.size(); i++) {
       Sightings.get(i).Draw(#00FFFF, 30);
     }*/

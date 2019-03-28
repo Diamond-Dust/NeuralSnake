@@ -15,14 +15,13 @@ void setup() {
   background(backgroundColor);
 }
 
-
 public boolean wait = true;
 
 void draw() { 
   if(!wait) {
     clear();
     background(backgroundColor);
-    den.update(); //<>//
+    den.update(); //<>// //<>//
     wait = true; //Comment out if smooth simulation is desired
   }
 }

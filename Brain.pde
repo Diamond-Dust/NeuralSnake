@@ -6,7 +6,7 @@ class Brain {
     return random(-PI/6, PI/6);
   };
   
-  void GetSightings(ArrayList<Point> Sightings) {
+  void GetSightings(ArrayList<Sighting> Sightings) {
       println(Sightings);
   };
   
