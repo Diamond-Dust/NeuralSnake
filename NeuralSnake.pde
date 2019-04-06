@@ -6,7 +6,7 @@ public float safetyMargin = 10.;
 public float sightInterval = 5.;
 public float consumptionDistance = 15.;
 //CreatureDen den = new CreatureDen(1,5);
-LifeTime life = new LifeTime(5, 60);
+LifeTime life = new LifeTime(5, 2);
 Snake snek = new Snake();
 
 void settings() { 
@@ -28,6 +28,9 @@ void draw() {
     //den.update(); //<>//
     if(life.update()) {
       life.setSpecimen(snek);
+      life.startTiming();
+      snek.setPosition();
+      snek.fitness = 0;
     }
     //wait = true; //Comment out if smooth simulation is desired
   }
