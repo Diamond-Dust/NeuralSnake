@@ -13,6 +13,11 @@ class CreatureDen {
     for(int i=0; i<numberOfMice; i++)
       creatures.add(new Mouse());
   };
+  CreatureDen(Snake specimen, int numberOfMice) {
+    creatures.add(specimen);
+    for(int i=0; i<numberOfMice; i++)
+      creatures.add(new Mouse());
+  };
   
   void update() {
     boolean CanGoAhead; //<>//
@@ -32,6 +37,14 @@ class CreatureDen {
       {
         if(i != j) {
           currentPossibleSnake = creatures.get(j);
+            
+          if(currentCreature instanceof Snake && currentPossibleSnake instanceof Mouse 
+            && currentCreature.headPosition.DistanceTo(currentPossibleSnake.headPosition) < consumptionDistance) {
+            currentCreature.IncreaseFitness(1);
+            creatures.remove(j);
+            creatures.add(new Mouse());
+            continue;
+          }
         
           if(currentCreature.IsSeen(currentPossibleSnake))
             Sightings.add(new Sighting(currentCreature, currentPossibleSnake));

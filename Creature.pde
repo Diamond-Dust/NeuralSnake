@@ -7,6 +7,8 @@ abstract class Creature implements Hoverable {
   Point headPosition = new Point(int(random(safetyMargin, size[0])), int(random(safetyMargin, size[1])));
   float delta = PI/90, courseAngle = 0;
   
+  float fitness = 0;
+  
   Ray[] Rays = new Ray[rayNumber];
   
   Brain brain = new Brain();
@@ -38,6 +40,10 @@ abstract class Creature implements Hoverable {
     return f;
   };
   
+  void IncreaseFitness(float By) {
+    fitness += By;
+  };
+  
   void setPosition(Point head) {
     headPosition = head;
   };
@@ -67,8 +73,8 @@ abstract class Creature implements Hoverable {
       P.Set(headPosition.x+FOVBaseSize*(f+0.5)*cos(courseAngle-phi/2+i*phi/rayNumber),
               headPosition.y+FOVBaseSize*(f+0.5)*sin(courseAngle-phi/2+i*phi/rayNumber));
       vertex(P.x, P.y);
-      //Rays[i].Set(headPosition, P);
-      //Rays[i].Draw(#FFFF00);
+      Rays[i].Set(headPosition, P);
+      Rays[i].Draw(#FFFF00);
     }
     endShape();
   };
@@ -118,6 +124,7 @@ abstract class Creature implements Hoverable {
   void HoverInfo(float[] information, String[] informationNames) { 
     float rectX=0, rectY=0, rectW=0, rectH=0;
     textSize(10);
+    rectMode(CORNER);
     
     if(abs(mouseX-headPosition.x)<25 && abs(mouseY-headPosition.y)<25) 
     {
