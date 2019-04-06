@@ -9,7 +9,7 @@ public float fitnessFromDistanceModifier = 1.25;
 Habitat hub = new Habitat(5, 5, 2);
 
 void settings() { 
-  size(640, 360);
+  size(size[0], size[1]);
 }
 
 void setup() {
