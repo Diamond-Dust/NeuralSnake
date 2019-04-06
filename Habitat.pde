@@ -3,10 +3,12 @@ class Habitat {
   ArrayList<Snake> snakes;
   FloatList fitnesses;
   int currentSnake = 0, currentGeneration = 0;
+  int population;
   
   Habitat(){
     life = new LifeTime(5, -1);
     snakes = new ArrayList<Snake>(1);
+    population = 1;
     snakes.add(new Snake());
     life.setSpecimen(snakes.get(0));
   };
@@ -14,12 +16,14 @@ class Habitat {
     life = new LifeTime(numOfMice, numOfSeconds);
     snakes = new ArrayList<Snake>(1);
     snakes.add(new Snake());
+    population = 1;
     fitnesses = new FloatList(1);
     life.setSpecimen(snakes.get(0));
   };
   Habitat(int numOfSnakes, int numOfMice, int numOfSeconds) {
     life = new LifeTime(numOfMice, numOfSeconds);
     snakes = new ArrayList<Snake>(numOfSnakes);
+    population = numOfSnakes;
     fitnesses = new FloatList(numOfSnakes);
     for(int i=0; i<numOfSnakes; i++){
       snakes.add(new Snake());
@@ -50,7 +54,7 @@ class Habitat {
     
     ArrayList<Snake> newGeneration = new ArrayList<Snake>();
     
-    while(newGeneration.size() < (float)snakes.size()/2) {
+    while(newGeneration.size() < population/2 + population%2) { //<>//
       fitnessRoll = random(fitnessSum);
       curSum = 0;
       for(int i=0; i<snakes.size(); i++){
@@ -60,17 +64,17 @@ class Habitat {
           newGeneration.add(snakes.get(i));
           snakes.remove(i);
           fitnesses.remove(i);
+          break;
         }
       }
     }
     
-    while(newGeneration.size() < snakes.size()) {
-      int newGenHalfSize = newGeneration.size();
-      for(int i=0; i<newGenHalfSize; i++){
-        newGeneration.add(new Snake(newGeneration.get(i)));
-      }
+    int parent_index = 0;
+    while(newGeneration.size() < population) {
+      newGeneration.add(new Snake(newGeneration.get(parent_index)));
+      parent_index += 1;
     }
-    
+    snakes = newGeneration;
     currentSnake = 0;
   };
   

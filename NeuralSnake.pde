@@ -22,7 +22,7 @@ public boolean wait = true;
 void draw() { 
   if(!wait) {
     clear();
-    background(backgroundColor); //<>//
+    background(backgroundColor);
     hub.update();
     //wait = true; //Comment out if smooth simulation is desired
   }
