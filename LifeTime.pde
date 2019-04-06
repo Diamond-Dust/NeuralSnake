@@ -33,9 +33,17 @@ class LifeTime {
     currentTime = 0;
   };
   
+  float popFitness() {
+    den.increaseFitnessFromMouseDistance();
+    float fit = den.getFitness();
+    den.resetFitness();
+    return fit;
+  };
+  
   boolean update() {
     if(allowedTime == -1) {
       den.update();
+      return false;
     }
     else if(allowedTime > currentTime) {
       int timeNow = millis();
@@ -44,7 +52,7 @@ class LifeTime {
       writeTimeLeft();
       return allowedTime <= currentTime;
     }
-    return false;
+    return true;
   };
   
   void writeTimeLeft() {

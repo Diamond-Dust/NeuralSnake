@@ -61,4 +61,46 @@ class CreatureDen {
       currentCreature.GetSightings(Sightings);
     }
   };
+  
+  void increaseFitnessFromMouseDistance() {
+    Creature currentPossibleSnake = creatures.get(0), currentPossibleMouse;
+    float minDistance;
+    
+    for(int j=1; j<creatures.size(); j++)
+    {
+        if(currentPossibleSnake instanceof Snake)
+          break;
+        currentPossibleSnake = creatures.get(j);
+    }
+    if(!(currentPossibleSnake instanceof Snake))
+          return;
+    minDistance = size[1]+size[0];
+    for(int j=0; j<creatures.size(); j++)
+    {
+        currentPossibleMouse = creatures.get(j);
+        if(currentPossibleMouse instanceof Mouse)
+          minDistance = min(minDistance, currentPossibleMouse.headPosition.DistanceTo(currentPossibleSnake.headPosition));
+    }
+    currentPossibleSnake.IncreaseFitness(pow(fitnessFromDistanceModifier, -minDistance/50));
+  };
+  float getFitness() {
+    Creature currentPossibleSnake;
+    for(int j=0; j<creatures.size(); j++)
+    {
+        currentPossibleSnake = creatures.get(j);
+        if(currentPossibleSnake instanceof Snake)
+          return currentPossibleSnake.fitness;
+    }
+    return 0;
+  };
+  void resetFitness() {
+    Creature currentPossibleSnake;
+    for(int j=0; j<creatures.size(); j++)
+    {
+        currentPossibleSnake = creatures.get(j);
+        if(currentPossibleSnake instanceof Snake)
+          currentPossibleSnake.fitness = 0;
+    }
+  }
+  
 };
