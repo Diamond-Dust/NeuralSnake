@@ -4,7 +4,7 @@ abstract class Creature implements Hoverable {
   float f;    //recognition constant
   
   color headColor = #000000, FOVColor = #000000;
-  Point headPosition = new Point(int(random(safetyMargin, size[0])), int(random(safetyMargin, size[1])));
+  Point headPosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin)));
   float delta = PI/90, courseAngle = 0;
   
   float fitness = 0;
