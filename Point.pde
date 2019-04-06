@@ -2,6 +2,19 @@ public class Point {
   public float x;
   public float y;
   
+  Point() {
+    x = 0;
+    y = 0;
+  };
+  Point(float X, float Y) {
+    x = X;
+    y = Y;
+  };
+  Point(Point P) {
+    x = P.x;
+    y = P.y;
+  };
+  
   void Set(float X, float Y) {
     x = X;
     y = Y;
@@ -32,18 +45,5 @@ public class Point {
   
   String toString() {
     return "(" + x + ", " + y + ")";
-  };
-  
-  Point() {
-    x = 0;
-    y = 0;
-  };
-  Point(float X, float Y) {
-    x = X;
-    y = Y;
-  };
-  Point(Point P) {
-    x = P.x;
-    y = P.y;
   };
 };

@@ -4,7 +4,7 @@ public int rayNumber = 10;
 public int FOVBaseSize = 50;
 public float safetyMargin = 10.;
 public float sightInterval = 5.;
-CreatureDen den = new CreatureDen(1,1); //<>//
+CreatureDen den = new CreatureDen(1, 1); //<>//
 
 void settings() { 
   size(size[0], size[1]);

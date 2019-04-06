@@ -34,7 +34,6 @@ class CreatureDen {
       creatures.add(m);
   }
   
-  
   void update() {
     boolean CanGoAhead; //<>//
     Point currentHeadPosition, futureHeadPosition;
