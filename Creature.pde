@@ -68,7 +68,7 @@ abstract class Creature implements Hoverable {
   
   void DrawFOV() {
     fill(FOVColor, 128);
-    noStroke();
+    stroke(#FFFF00);
     beginShape(TRIANGLE_FAN);
     vertex(headPosition.x,headPosition.y);
     Point P = new Point();
@@ -77,7 +77,7 @@ abstract class Creature implements Hoverable {
               headPosition.y+FOVBaseSize*(f+0.5)*sin(courseAngle-phi/2+i*phi/rayNumber));
       vertex(P.x, P.y);
       Rays[i].Set(headPosition, P);
-      Rays[i].Draw(#FFFF00);
+      //Rays[i].Draw(#FFFF00);
     }
     endShape();
   };
@@ -100,9 +100,6 @@ abstract class Creature implements Hoverable {
   };
   
   void GetSightings(ArrayList<Sighting> Sightings) {
-    /*for(int i=0; i<Sightings.size(); i++) {
-      Sightings.get(i).Draw(#00FFFF, 30);
-    }*/
     brain.GetSightings(Sightings);
   };
   

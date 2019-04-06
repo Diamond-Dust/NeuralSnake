@@ -19,8 +19,6 @@ class Brain {
   }
   
   float DecideAngle() {
-    //return random(-PI/6, PI/6);
-    //println(Memory.size());
     return (Memory.size() == 0 || !isSnek) ? random(-PI/6, PI/6) : rememberClosest().relativeAngle/30.;
   };
   
