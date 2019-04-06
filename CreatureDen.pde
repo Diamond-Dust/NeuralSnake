@@ -18,6 +18,26 @@ class CreatureDen {
     for(int i=0; i<numberOfMice; i++)
       creatures.add(new Mouse());
   };
+  CreatureDen(Snake snake, Mouse mouse){
+    creatures.add(snake);
+    creatures.add(mouse);
+  };
+  CreatureDen(Snake snake, ArrayList<Mouse> mice){
+    creatures.add(snake);
+    for(Mouse m : mice)
+      creatures.add(m);
+  };
+  CreatureDen(ArrayList<Snake> snakes, Mouse mouse){
+    for(Snake s : snakes)
+      creatures.add(s);
+    creatures.add(mouse);
+  };
+  CreatureDen(ArrayList<Snake> snakes, ArrayList<Mouse> mice){
+    for(Snake s : snakes)
+      creatures.add(s);
+    for(Mouse m : mice)
+      creatures.add(m);
+  };
   
   void update() {
     boolean CanGoAhead; //<>//
