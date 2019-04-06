@@ -125,6 +125,7 @@ abstract class Creature implements Hoverable {
     float rectX=0, rectY=0, rectW=0, rectH=0;
     textSize(10);
     rectMode(CORNER);
+    textAlign(BASELINE);
     
     if(abs(mouseX-headPosition.x)<25 && abs(mouseY-headPosition.y)<25) 
     {

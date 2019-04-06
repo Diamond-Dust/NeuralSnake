@@ -48,11 +48,13 @@ class LifeTime {
   };
   
   void writeTimeLeft() {
-    String time = nf(((float)currentTime)/1000.0, 2, 3);
+    String time = nf( ((float)(allowedTime - currentTime)) / 1000.0, 2, 3 );
     rectMode(CORNERS);  
     fill(200);  
     rect(size[0]-50, size[1]-25, size[0], size[1]);  
     fill(50);  
+    textSize(14);
+    textAlign(CENTER, CENTER);
     text(time, size[0]-50, size[1]-25, size[0], size[1]);
     noFill();
   };
