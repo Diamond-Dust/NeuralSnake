@@ -1,9 +1,14 @@
 class Brain {
   
   ArrayList<Sighting> Memory;
+  boolean isSnek = false;
   
   Brain() {
     Memory = new ArrayList<Sighting>();
+  };
+  Brain(boolean isSnake) {
+    Memory = new ArrayList<Sighting>();
+    isSnek = isSnake;
   };
   
   Sighting rememberClosest() {
@@ -16,7 +21,7 @@ class Brain {
   float DecideAngle() {
     //return random(-PI/6, PI/6);
     //println(Memory.size());
-    return (Memory.size() == 0) ? random(-PI/6, PI/6) : rememberClosest().relativeAngle/30.;
+    return (Memory.size() == 0 || !isSnek) ? random(-PI/6, PI/6) : rememberClosest().relativeAngle/30.;
   };
   
   void GetSightings(ArrayList<Sighting> Sightings) {

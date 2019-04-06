@@ -39,6 +39,8 @@ public class Snake extends Creature{
     tailColor = color(0, 0, int(random(128, 255)));
     
     Coords.add(headPosition.clone());
+    
+    brain = new Brain(true);
   };
   Snake(float L, float V, float Phi, float M) {
     super( V, Phi );
