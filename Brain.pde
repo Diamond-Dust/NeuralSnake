@@ -7,7 +7,7 @@ class Brain {
   };
   
   void GetSightings(ArrayList<Sighting> Sightings) {
-      println(Sightings);
+      //println(Sightings);
   };
   
 };

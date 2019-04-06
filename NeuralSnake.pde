@@ -4,8 +4,8 @@ public int rayNumber = 10;
 public int FOVBaseSize = 50;
 public float safetyMargin = 10.;
 public float sightInterval = 5.;
-CreatureDen den = new CreatureDen(1, 1); //<>//
-
+GeneticSimulation simulation = new GeneticSimulation();
+ //<>//
 void settings() { 
   size(size[0], size[1]);
 }
@@ -21,8 +21,8 @@ void draw() {
   if(!wait) {
     clear();
     background(backgroundColor);
-    den.update(); //<>// //<>//
-    wait = true; //Comment out if smooth simulation is desired
+    simulation.update();
+    //wait = true; //Comment out if smooth simulation is desired //<>//
   }
 }
 

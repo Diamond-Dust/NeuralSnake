@@ -4,7 +4,7 @@ abstract class Creature implements Hoverable {
   float f;    //recognition constant
   
   color headColor = #000000, FOVColor = #000000;
-  Point headPosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin)));
+  Point headPosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1])));
   float delta = PI/90, courseAngle = 0;
   
   Ray[] Rays = new Ray[rayNumber];
@@ -171,4 +171,7 @@ abstract class Creature implements Hoverable {
       
   };
   
+  String toString() {
+    return "" + v + ", " + phi + ", " + f;
+  };
 };

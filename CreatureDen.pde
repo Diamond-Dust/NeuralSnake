@@ -68,4 +68,8 @@ class CreatureDen {
       currentCreature.GetSightings(Sightings);
     }
   };
+  
+  float getFitness(){
+    return 1.0;
+  }
 };

@@ -151,4 +151,7 @@ public class Snake extends Creature{
     return false;
   };
   
+  String toString() {
+    return "(" + super.toString() + ", " + v + ", " + phi + ", " + f + ")";
+  };
 };
