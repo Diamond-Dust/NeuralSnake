@@ -9,7 +9,7 @@ public float fitnessFromDistanceModifier = 1.25;
 Habitat hub = new Habitat(5, 5, 2);
 
 void settings() { 
-  size(640, 360);
+  size(size[0], size[1]);
 }
 
 void setup() {
@@ -22,7 +22,7 @@ public boolean wait = true;
 void draw() { 
   if(!wait) {
     clear();
-    background(backgroundColor); //<>//
+    background(backgroundColor);
     hub.update();
     //wait = true; //Comment out if smooth simulation is desired
   }
