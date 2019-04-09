@@ -1,5 +1,5 @@
 public int size[] = {640, 360};
-public color backgroundColor = #000000;
+public color backgroundColor = #777777;
 public int rayNumber = 10;
 public int FOVBaseSize = 50;
 public float safetyMargin = 10.;
