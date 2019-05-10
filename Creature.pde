@@ -99,23 +99,23 @@ abstract class Creature implements Hoverable {
     this.setAngle(brain.DecideAngle());
   };
   
-  void GetSightings(ArrayList<Sighting> Sightings) {
+  void GetSightings(float[][] Sightings) {
     brain.GetSightings(Sightings);
   };
   
-  public boolean IsSeen(Creature C) {
-    boolean IS = false;
+  public int IsSeenByRay(Creature C) {
+    int IS = -1;
     for(int i=0; i< rayNumber; i++) {
       if(Rays[i].CheckIfInFrontAndInInterval(C.headPosition, sightInterval))
-        IS = true;
+        IS = i;
     }
     return IS;
   };
-  public boolean IsSeen(Point P) {
-    boolean IS = false;
+  public int IsSeenByRay(Point P) {
+    int IS = -1;
     for(int i=0; i< rayNumber; i++) {
       if(Rays[i].CheckIfInFrontAndInInterval(P, sightInterval))
-        IS = true;
+        IS = i;
     }
     return IS;
   };

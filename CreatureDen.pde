@@ -66,8 +66,9 @@ class CreatureDen {
             continue;
           }
         
-          if(currentCreature.IsSeen(currentPossibleSnake))
-            Sightings.add(new Sighting(currentCreature, currentPossibleSnake));
+          int seeingRay = currentCreature.IsSeenByRay(currentPossibleSnake);
+          if(seeingRay != -1)
+            Sightings.add(new Sighting(currentCreature, currentPossibleSnake, seeingRay));
         
           if(currentPossibleSnake instanceof Snake && CanGoAhead)
             CanGoAhead = !((Snake)currentPossibleSnake).IsPassedThrough(currentHeadPosition, futureHeadPosition);
@@ -78,9 +79,25 @@ class CreatureDen {
       }
       
       currentCreature.update(CanGoAhead);
-      currentCreature.GetSightings(Sightings);
+      currentCreature.GetSightings(parseSightings(Sightings));
     }
   };
+  
+  float[][] parseSightings(ArrayList<Sighting> sightings) {
+    float[][] parsed = new float[rayNumber][2]; // [dist ; angle]
+    for(int i=0; i<rayNumber; i++)
+      for(int j=0; j<2; j++)
+        parsed[i][j] = Float.POSITIVE_INFINITY;
+    
+    for(int i=0; i<sightings.size(); i++) {
+      if(parsed[sightings.get(i).rayIndex][0] > sightings.get(i).Distance) {
+        parsed[sightings.get(i).rayIndex][0] = sightings.get(i).Distance;
+        parsed[sightings.get(i).rayIndex][1] = sightings.get(i).relativeAngle;
+      }
+    }
+    
+    return parsed;
+  }
   
   void increaseFitnessFromMouseDistance() {
     Creature currentPossibleSnake = creatures.get(0), currentPossibleMouse;

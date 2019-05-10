@@ -1,14 +1,14 @@
 class Sighting {
   float Distance;
   float relativeAngle;
-  String typeSeen;
+  int rayIndex;
   
-  Sighting(float D, float rA, String tS) {
+  Sighting(float D, float rA, int rN) {
     Distance = D;
     relativeAngle = rA;
-    typeSeen = tS;
+    rayIndex = rN;
   };
-  Sighting(Point viewerPosition, float viewerAbsoluteAngle, Point sightingPosition, String TypeSeen) {
+  Sighting(Point viewerPosition, float viewerAbsoluteAngle, Point sightingPosition, int rN) {
     Distance = viewerPosition.DistanceTo(sightingPosition);
     relativeAngle = PVector.angleBetween(
                                            PVector.fromAngle(viewerAbsoluteAngle), 
@@ -17,9 +17,9 @@ class Sighting {
                                                         sightingPosition.y-viewerPosition.y
                                            )
                                          );
-    typeSeen = TypeSeen;
+     rayIndex= rN;
   };
-  Sighting(Creature beholder, Creature beholden) {
+  Sighting(Creature beholder, Creature beholden, int rN) {
     Distance = beholder.headPosition.DistanceTo(beholden.headPosition);
     relativeAngle = PVector.angleBetween(
                                            PVector.fromAngle(beholder.courseAngle), 
@@ -28,6 +28,6 @@ class Sighting {
                                                          beholden.headPosition.y-beholder.headPosition.y
                                            )
                                          );
-    typeSeen = beholden.getClass().getName();
+    rayIndex = rN;
   };
 };

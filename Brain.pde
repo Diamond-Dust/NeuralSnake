@@ -1,30 +1,37 @@
 class Brain {
   
-  ArrayList<Sighting> Memory;
+  float[][] Memory;
   boolean isSnek = false;
   
   Brain() {
-    Memory = new ArrayList<Sighting>();
+    Memory = new float[rayNumber][2];
   };
   Brain(boolean isSnake) {
-    Memory = new ArrayList<Sighting>();
+    Memory = new float[rayNumber][2];
     isSnek = isSnake;
   };
   
-  Sighting rememberClosest() {
-    Sighting minDistSighting = Memory.get(0);
-    for(int i=1; i<Memory.size(); i++)
-      minDistSighting = (Memory.get(i).Distance < minDistSighting.Distance) ? Memory.get(i) : minDistSighting;
+  float rememberClosest() {
+    float minDistSighting = Memory[0][0];
+    for(int i=1; i<rayNumber; i++)
+      minDistSighting = (Memory[i][0] < minDistSighting) ? Memory[i][0] : minDistSighting;
     return minDistSighting;
   }
   
   float DecideAngle() {
-    return (Memory.size() == 0 || !isSnek) ? random(-PI/6, PI/6) : rememberClosest().relativeAngle/30.;
+    return (IsInputEmpty(Memory) || !isSnek) ? random(-PI/6, PI/6) : rememberClosest()/30.;
   };
   
-  void GetSightings(ArrayList<Sighting> Sightings) {
-    if(Sightings.size() != 0)
-      Memory = Sightings;
+  boolean IsInputEmpty(float[][] input) {
+    for(int i=0; i<rayNumber; i++)
+      if(input[i][0] != Float.POSITIVE_INFINITY)
+        return false;
+    return true;
+  }
+  
+  void GetSightings(float[][] sightings) {
+    if(IsInputEmpty(sightings))
+      Memory = sightings;
     //println(Memory);
   };
   
