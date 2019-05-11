@@ -65,6 +65,9 @@ public class Snake extends Creature{
     tailColor = color(0, 0, int(random(128, 255)));
     
     Coords.add(headPosition.clone());
+    
+    brain = new Brain(Parent.brain);
+    brain.Mutate();
   };
 
   //Snake-specific drawing
@@ -113,10 +116,10 @@ public class Snake extends Creature{
   }
   
   //Does that pass through?
-  boolean IsPassedThrough(Point start, Point end, boolean DoDraw) {
+  boolean IsPassedThrough(Point start, Point end, boolean DoDraw) { //<>//
     if(Coords.size() < 2)
       return false;
-    else //<>//
+    else
     {
       Point P; //<>//
       Segment snakePart = new Segment(), checkedPart = new Segment(start, end);

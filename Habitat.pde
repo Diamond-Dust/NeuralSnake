@@ -54,26 +54,34 @@ class Habitat {
     
     ArrayList<Snake> newGeneration = new ArrayList<Snake>();
     
-    while(newGeneration.size() < population/2 + population%2) { //<>//
-      fitnessRoll = random(fitnessSum);
-      curSum = 0;
-      for(int i=0; i<snakes.size(); i++){
-        curSum += fitnesses.get(i);
-        if(curSum >= fitnessRoll) {
-          fitnessSum -= fitnesses.get(i);
-          newGeneration.add(snakes.get(i));
-          snakes.remove(i);
-          fitnesses.remove(i);
-          break;
-        }
+    if(fitnessSum == 0) {
+      while(newGeneration.size() < population) {
+        newGeneration.add(new Snake());
       }
     }
-    
-    int parent_index = 0;
-    while(newGeneration.size() < population) {
-      newGeneration.add(new Snake(newGeneration.get(parent_index)));
-      parent_index += 1;
+    else {
+      while(newGeneration.size() < population/2 + population%2) {
+        fitnessRoll = random(fitnessSum);
+        curSum = 0;
+        for(int i=0; i<snakes.size(); i++){
+          curSum += fitnesses.get(i);
+          if(curSum >= fitnessRoll) {
+            fitnessSum -= fitnesses.get(i);
+            newGeneration.add(snakes.get(i));
+            snakes.remove(i);
+            fitnesses.remove(i);
+            break;
+          }
+        }
+      }
+      
+      int parent_index = 0;
+      while(newGeneration.size() < population) {
+        newGeneration.add(new Snake(newGeneration.get(parent_index)));
+        parent_index += 1;
+      }
     }
+     //<>//
     snakes = newGeneration;
     currentSnake = 0;
   };

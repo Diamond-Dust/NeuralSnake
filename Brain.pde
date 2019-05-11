@@ -26,6 +26,20 @@ class Brain {
     S[1] = RandomiseMatrixNormalised(5, 5, -1, 1);                // Synapses between Layer1 -> Layer2
     S[2] = RandomiseMatrixNormalised(5, 1, -1, 1);                // Synapses between Layer2 -> Output 
   };
+  Brain(Brain Parent) {
+    Memory = new float[Parent.Memory.length][Parent.Memory[1].length];
+    isSnek = Parent.isSnek;
+    
+    for(int i=0; i<Parent.S.length; i++)
+      S[i] = Parent.S[i].copy();
+  };
+  
+  void Mutate() {
+    for(int i=0; i<S.length; i++)
+      for(int j=0; j<S[i].getRowDimension(); j++)
+        for(int k=0; k<S[i].getColumnDimension(); k++)
+          S[i].set(j, k, S[i].get(j, k) * 1+random(-brainMutationRate, brainMutationRate));
+  }
   
   float rememberClosest() {
     float minDistSighting = Memory[0][0];
@@ -73,7 +87,7 @@ class Brain {
   
   void GetSightings(float[][] sightings) {
     if(IsInputEmpty(sightings))
-      Memory = sightings;
+      Memory = sightings; //<>//
     //println(Memory);
   };
   
