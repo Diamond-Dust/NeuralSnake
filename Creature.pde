@@ -89,6 +89,10 @@ abstract class Creature implements Hoverable {
     headPosition.Draw(headColor, 5);
   };
   
+  
+  boolean hasReactedToInput = false;
+  float lastOutput = -PI;
+  
   void update(boolean CanGoAhead, boolean DoDraw) {
     if(CanGoAhead) {
       courseAngle = (courseAngle+delta)%(2*PI);
@@ -101,7 +105,16 @@ abstract class Creature implements Hoverable {
       DrawHead();
     }
   
-    this.setAngle(brain.DecideAngle());
+    if(lastOutput != -PI) {
+      float curOutput = brain.DecideAngle()
+      if(lastOutput != curOutput)
+        hasReactedToInput = true;
+      lastOutput = curOutput;
+    }
+    else
+      lastOutput = brain.DecideAngle();
+      
+    this.setAngle(lastOutput);
   };
   
   void GetSightings(float[][] Sightings) {

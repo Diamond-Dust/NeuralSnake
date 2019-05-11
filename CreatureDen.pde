@@ -119,7 +119,11 @@ class CreatureDen {
           minDistance = min(minDistance, currentPossibleMouse.headPosition.DistanceTo(currentPossibleSnake.headPosition));
     }
     currentPossibleSnake.IncreaseFitness(pow(fitnessFromDistanceModifier, -minDistance/50));
+    
+    if(!currentPossibleSnake.hasReactedToInput)
+      currentPossibleSnake.SetFitness(0.);
   };
+  
   float getFitness() {
     Creature currentPossibleSnake;
     for(int j=0; j<creatures.size(); j++)
@@ -130,6 +134,7 @@ class CreatureDen {
     }
     return 0;
   };
+  
   void resetFitness() {
     Creature currentPossibleSnake;
     for(int j=0; j<creatures.size(); j++)
