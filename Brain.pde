@@ -1,7 +1,4 @@
 class Brain {
-  Matrix S0;  // Synapses between In -> L1
-  Matrix S1;  // Synapses between L1 -> L2
-  Matrix S2;  // Synapses between L2 -> Out
   Matrix[] S = new Matrix[3];
   float[][] Memory;
   boolean isSnek = false;
@@ -63,7 +60,7 @@ class Brain {
           out.set(j, k, sigmoid(out.get(j, k)));
     }
       
-    out = out.times(S[2]);          // Output is 1 x 1 matrix
+    out = out.times(S[S.length-1]);          // Output is 1 x 1 matrix
     return sigmoid(out.get(0,0));
   }
   

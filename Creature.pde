@@ -106,7 +106,7 @@ abstract class Creature implements Hoverable {
     }
   
     if(lastOutput != -PI) {
-      float curOutput = brain.DecideAngle()
+      float curOutput = brain.DecideAngle();
       if(lastOutput != curOutput)
         hasReactedToInput = true;
       lastOutput = curOutput;
