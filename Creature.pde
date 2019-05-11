@@ -86,15 +86,17 @@ abstract class Creature implements Hoverable {
     headPosition.Draw(headColor, 5);
   };
   
-  void update(boolean CanGoAhead) {
+  void update(boolean CanGoAhead, boolean DoDraw) {
     if(CanGoAhead) {
       courseAngle = (courseAngle+delta)%(2*PI);
       headPosition.x = min(max(0, headPosition.x+v*cos(courseAngle)), size[0]);
       headPosition.y = min(max(0, headPosition.y+v*sin(courseAngle)), size[1]);
     }
     
-    DrawFOV();  
-    DrawHead();
+    if(DoDraw) {
+      DrawFOV();  
+      DrawHead();
+    }
   
     this.setAngle(brain.DecideAngle());
   };

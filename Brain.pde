@@ -44,7 +44,7 @@ class Brain {
   
   float DecideAngle() {
     if(!isSnek)
-      return (IsInputEmpty(Memory) || !isSnek) ? random(-PI/6, PI/6) : rememberClosest()/30.;
+      return random(-PI/6, PI/6);
   
     // Create input matrix
     Matrix input = new Matrix(1, 2*rayNumber);

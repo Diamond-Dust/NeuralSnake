@@ -40,14 +40,20 @@ class LifeTime {
     return fit;
   };
   
-  boolean update() {
+  boolean update(boolean DoDraw) {
+    if(!DoDraw) {
+       int timeNow = millis();
+       for(timeNow = millis(), currentTime = 0; allowedTime > currentTime; currentTime = millis()-timeNow) {
+         den.update(DoDraw);
+       }
+    }
     if(allowedTime == -1) {
-      den.update();
+      den.update(DoDraw);
       return false;
     }
     else if(allowedTime > currentTime) {
       int timeNow = millis();
-      den.update();
+      den.update(DoDraw);
       currentTime += millis()-timeNow;
       writeTimeLeft();
       return allowedTime <= currentTime;

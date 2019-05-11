@@ -9,11 +9,13 @@ class Mouse extends Creature {
     headColor = FOVColor = #FF0000; 
   }
   
-  void update(boolean CanGoAhead) {
-    super.update(CanGoAhead); 
+  void update(boolean CanGoAhead, boolean DoDraw) {
+    super.update(CanGoAhead, DoDraw); 
     
-    float[] info = {v, phi, f, m};
-    String[] infoNames = {"V", "Phi", "F", "M"};
-    HoverInfo(info, infoNames);   
+    if(DoDraw) {
+      float[] info = {v, phi, f, m};
+      String[] infoNames = {"V", "Phi", "F", "M"};
+      HoverInfo(info, infoNames);  
+    }
   }
 }

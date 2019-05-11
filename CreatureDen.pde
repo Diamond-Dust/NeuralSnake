@@ -39,7 +39,7 @@ class CreatureDen {
       creatures.add(m);
   };
   
-  void update() {
+  void update(boolean DoDraw) {
     boolean CanGoAhead; //<>//
     Point currentHeadPosition, futureHeadPosition;
     Creature currentCreature, currentPossibleSnake;
@@ -71,14 +71,14 @@ class CreatureDen {
             Sightings.add(new Sighting(currentCreature, currentPossibleSnake, seeingRay));
         
           if(currentPossibleSnake instanceof Snake && CanGoAhead)
-            CanGoAhead = !((Snake)currentPossibleSnake).IsPassedThrough(currentHeadPosition, futureHeadPosition);
+            CanGoAhead = !((Snake)currentPossibleSnake).IsPassedThrough(currentHeadPosition, futureHeadPosition, DoDraw);
           if(!CanGoAhead)
             continue;
 
         }
       }
       
-      currentCreature.update(CanGoAhead);
+      currentCreature.update(CanGoAhead, DoDraw);
       currentCreature.GetSightings(parseSightings(Sightings));
     }
   };

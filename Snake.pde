@@ -96,25 +96,27 @@ public class Snake extends Creature{
     endShape();
   };
 
-  void update(boolean CanGoAhead) { 
-    super.update(CanGoAhead);
+  void update(boolean CanGoAhead, boolean DoDraw) { 
+    super.update(CanGoAhead, DoDraw);
     
     if(CanGoAhead) {
       Coords.add(headPosition.clone());
     }
       
-    this.drawTail();
-      
-    float[] info = {l, v, phi, f, m};
-    String[] infoNames = {"L", "V", "Phi", "F", "M"};
-    HoverInfo(info, infoNames);    
+    if(DoDraw) {
+      this.drawTail();
+        
+      float[] info = {l, v, phi, f, m};
+      String[] infoNames = {"L", "V", "Phi", "F", "M"};
+      HoverInfo(info, infoNames);  
+    }
   }
   
   //Does that pass through?
-  boolean IsPassedThrough(Point start, Point end) {
+  boolean IsPassedThrough(Point start, Point end, boolean DoDraw) {
     if(Coords.size() < 2)
       return false;
-    else
+    else //<>//
     {
       Point P; //<>//
       Segment snakePart = new Segment(), checkedPart = new Segment(start, end);
@@ -124,14 +126,16 @@ public class Snake extends Creature{
         P = snakePart.WhereIsIntersecting(checkedPart);
         if(P != null) {
           //Shows the collision
-          P.Draw(#FF0000, 15);
+          if(DoDraw) {
+            P.Draw(#FF0000, 15);
+          }
           return true;
         }
       }
     }
     return false;
   };
-  boolean IsPassedThrough(Segment checkedPart) {
+  boolean IsPassedThrough(Segment checkedPart, boolean DoDraw) {
     if(Coords.size() < 2)
       return false;
     else
@@ -144,8 +148,9 @@ public class Snake extends Creature{
         P = snakePart.WhereIsIntersecting(checkedPart);
         if(P != null) {
           //Shows the collision
-          fill(#FF0000);
-          ellipse(P.x, P.y, 15, 15);
+          if(DoDraw) {
+            P.Draw(#FF0000, 15);
+          }
           return true;
         }
       }

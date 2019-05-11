@@ -32,7 +32,7 @@ class Habitat {
   };
   
   void update() {
-    if(life.update()) {
+    if(life.update(currentGeneration % drawGenerationEvery == 0)) {
       life.setSpecimen(snakes.get(currentSnake));
       life.startTiming();
       snakes.get(currentSnake).setPosition();
@@ -54,7 +54,7 @@ class Habitat {
     
     ArrayList<Snake> newGeneration = new ArrayList<Snake>();
     
-    while(newGeneration.size() < population/2 + population%2) { //<>//
+    while(newGeneration.size() < population/2 + population%2) { //<>// //<>//
       fitnessRoll = random(fitnessSum);
       curSum = 0;
       for(int i=0; i<snakes.size(); i++){
