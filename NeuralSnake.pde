@@ -1,3 +1,5 @@
+import Jama.*; // Java matrix
+
 public int size[] = {640, 360};
 public color backgroundColor = #000000;
 public int rayNumber = 10;
