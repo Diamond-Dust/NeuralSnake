@@ -40,6 +40,9 @@ abstract class Creature implements Hoverable {
     return f;
   };
   
+  void SetFitness(float F) {
+    fitness = F;
+  };
   void IncreaseFitness(float By) {
     fitness += By;
   };
