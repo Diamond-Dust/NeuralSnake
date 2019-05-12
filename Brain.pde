@@ -14,17 +14,17 @@ class Brain {
   Brain() {
     Memory = new float[rayNumber][2];
     
-    S[0] = RandomiseMatrixNormalised(rayNumber*2, 5, -1, 1);      // Synapses between Input -> Layer1
-    S[1] = RandomiseMatrixNormalised(5, 5, -1, 1);                // Synapses between Layer1 -> Layer2
-    S[2] = RandomiseMatrixNormalised(5, 1, -1, 1);                // Synapses between Layer2 -> Output 
+    S[0] = RandomiseMatrixNormalised(rayNumber*2, 5, -5, 3);      // Synapses between Input -> Layer1
+    S[1] = RandomiseMatrixNormalised(5, 5, -5, 3);                // Synapses between Layer1 -> Layer2
+    S[2] = RandomiseMatrixNormalised(5, 1, -5, 3);                // Synapses between Layer2 -> Output 
   };
   Brain(boolean isSnake) {
     Memory = new float[rayNumber][2];
     isSnek = isSnake;
     
-    S[0] = RandomiseMatrixNormalised(rayNumber*2, 5, -1, 1);      // Synapses between Input -> Layer1
-    S[1] = RandomiseMatrixNormalised(5, 5, -1, 1);                // Synapses between Layer1 -> Layer2
-    S[2] = RandomiseMatrixNormalised(5, 1, -1, 1);                // Synapses between Layer2 -> Output 
+    S[0] = RandomiseMatrixNormalised(rayNumber*2, 5, -5, 3);      // Synapses between Input -> Layer1
+    S[1] = RandomiseMatrixNormalised(5, 5, -5, 3);                // Synapses between Layer1 -> Layer2
+    S[2] = RandomiseMatrixNormalised(5, 1, -5, 3);                // Synapses between Layer2 -> Output 
   };
   Brain(Brain Parent) {
     Memory = new float[Parent.Memory.length][Parent.Memory[1].length];
