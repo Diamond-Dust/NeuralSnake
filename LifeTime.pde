@@ -37,6 +37,7 @@ class LifeTime {
   float popFitness() {
     den.increaseFitnessFromMouseDistance();
     float fit = den.getFitness();
+    println("    ", fit);
     den.resetFitness();
     return fit;
   };
@@ -44,17 +45,19 @@ class LifeTime {
   boolean update(boolean DoDraw) {
     if(!DoDraw) {
        for(currentTime = 0; allowedTime > currentTime; currentTime += timeEpsilon) {
+         den.increaseFitnessFromMouseDistance();
          den.update(DoDraw);
-       }
+         }
     }
     if(allowedTime == -1) {
+      den.increaseFitnessFromMouseDistance();
       den.update(DoDraw);
       return false;
     }
     else if(allowedTime > currentTime) {
-      int timeNow = millis();
       den.update(DoDraw);
-      currentTime += millis()-timeNow;
+      den.increaseFitnessFromMouseDistance(); 
+      currentTime += timeEpsilon;
       writeTimeLeft();
       return allowedTime <= currentTime;
     }

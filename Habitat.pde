@@ -38,10 +38,10 @@ class Habitat {
       } else{
         frameRate(30*1000);
       }
+      fitnesses.append(life.popFitness());
       life.setSpecimen(snakes.get(currentSnake));
       life.startTiming();
       snakes.get(currentSnake).setPosition();
-      fitnesses.append(life.popFitness());
       currentSnake++;
     }
     

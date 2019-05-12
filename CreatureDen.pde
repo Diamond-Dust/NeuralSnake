@@ -60,7 +60,7 @@ class CreatureDen {
             
           if(currentCreature instanceof Snake && currentPossibleSnake instanceof Mouse 
             && currentCreature.headPosition.DistanceTo(currentPossibleSnake.headPosition) < consumptionDistance) {
-            currentCreature.IncreaseFitness(1);
+            currentCreature.IncreaseFitness(20);
             creatures.remove(j);
             creatures.add(new Mouse());
             continue;
@@ -92,7 +92,7 @@ class CreatureDen {
     
     for(int i=0; i<sightings.size(); i++) {
       if(parsed[sightings.get(i).rayIndex][0] > sightings.get(i).Distance) {
-        parsed[sightings.get(i).rayIndex][0] = sightings.get(i).Distance; //<>// //<>//
+        parsed[sightings.get(i).rayIndex][0] = sightings.get(i).Distance; //<>//
         parsed[sightings.get(i).rayIndex][1] = sightings.get(i).relativeAngle;
       }
     }
@@ -120,12 +120,10 @@ class CreatureDen {
           minDistance = min(minDistance, currentPossibleMouse.headPosition.DistanceTo(currentPossibleSnake.headPosition));
     }
     currentPossibleSnake.IncreaseFitness(pow(fitnessFromDistanceModifier, -minDistance/50));
-    
     if(!currentPossibleSnake.hasReactedToInput){
     //  currentPossibleSnake.SetFitness(0.);
     }
     
-    println("    ", currentPossibleSnake.fitness);
   };
   
   float getFitness() {
@@ -142,7 +140,7 @@ class CreatureDen {
   void resetFitness() {
     Creature currentPossibleSnake;
     for(int j=0; j<creatures.size(); j++)
-    {
+    { //<>//
         currentPossibleSnake = creatures.get(j);
         if(currentPossibleSnake instanceof Snake)
           currentPossibleSnake.fitness = 0;
