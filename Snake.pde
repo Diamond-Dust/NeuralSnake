@@ -51,23 +51,29 @@ public class Snake extends Creature{
     tailColor = color(0, 0, int(random(128, 255)));
     
     Coords.add(headPosition.clone());
+    brain = new Brain(true);
   };
   Snake(Snake Parent) {
     super();
-    float[] mutatedValues = Mutate(Parent.getL(), Parent.getV(), Parent.getPhi(), Parent.getF(), Parent.getM());
-    l = mutatedValues[0];
-    v = mutatedValues[1];
-    phi = mutatedValues[2];
-    f = mutatedValues[3];
-    m = mutatedValues[4];
+    // This creates very fast creatures, needs to be looked into
+    //float[] mutatedValues = Mutate(Parent.getL(), Parent.getV(), Parent.getPhi(), Parent.getF(), Parent.getM());
+    //l = mutatedValues[0];
+    //v = mutatedValues[1];
+    //phi = mutatedValues[2];
+    //f = mutatedValues[3];
+    //m = mutatedValues[4];
+    l = Parent.l;
+    v = Parent.v;
+    phi = Parent.phi;
+    f = Parent.f;
+    m = Parent.m;
     
     FOVColor = headColor = color(0, int(random(128, 255)), 0);
     tailColor = color(0, 0, int(random(128, 255)));
     
     Coords.add(headPosition.clone());
-    
-    //brain = new Brain(Parent.brain);
-    //brain.Mutate();
+    brain = new Brain(Parent.brain);
+    brain.Mutate();
   };
 
   //Snake-specific drawing

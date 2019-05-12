@@ -51,7 +51,6 @@ class Brain {
   float DecideAngle() {
     if(!isSnek)
       return random(-PI/6, PI/6);
-    
     return -PI/6 + (float)FeedForward()*PI/3;
     
   };
@@ -60,7 +59,7 @@ class Brain {
     Matrix input = new Matrix(1, 2*rayNumber);
     for(int i=0; i<rayNumber; i++)
       for(int j=0; j<2; j++)
-        input.set(0, i+j*rayNumber, sigmoid(Memory[i][j]));
+        input.set(0, i+j*rayNumber, 1 - sigmoid(Memory[i][j]));
     
     // Feed forward through layers
     Matrix out = input.times(S[0]); // Output is 1 x 5 matrix
@@ -86,9 +85,9 @@ class Brain {
   }
   
   void GetSightings(float[][] sightings) {
-    if(IsInputEmpty(sightings))
+    if(!IsInputEmpty(sightings)){
       Memory = sightings; //<>//
-    //println(Memory);
+    }
   };
   
   double sigmoid(double x){

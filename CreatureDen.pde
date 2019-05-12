@@ -79,7 +79,8 @@ class CreatureDen {
       }
       
       currentCreature.update(CanGoAhead, DoDraw);
-      currentCreature.GetSightings(parseSightings(Sightings));
+      if(currentCreature instanceof Snake)
+        currentCreature.GetSightings(parseSightings(Sightings));
     }
   };
   
@@ -91,7 +92,7 @@ class CreatureDen {
     
     for(int i=0; i<sightings.size(); i++) {
       if(parsed[sightings.get(i).rayIndex][0] > sightings.get(i).Distance) {
-        parsed[sightings.get(i).rayIndex][0] = sightings.get(i).Distance;
+        parsed[sightings.get(i).rayIndex][0] = sightings.get(i).Distance; //<>//
         parsed[sightings.get(i).rayIndex][1] = sightings.get(i).relativeAngle;
       }
     }

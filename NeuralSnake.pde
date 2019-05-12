@@ -10,7 +10,7 @@ public float sightInterval = 5.;
 public float consumptionDistance = 15.;
 public float fitnessFromDistanceModifier = 1.25;
 public float brainMutationRate = 0.01;
-Habitat hub = new Habitat(5, 5, 2);
+Habitat hub = new Habitat(10, 5, 2);
 
 void settings() { 
   size(size[0], size[1]);
@@ -34,4 +34,5 @@ void draw() {
 
 void keyPressed() {
   wait = false;
+  frameRate(30*1000);
 }
