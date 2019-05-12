@@ -33,6 +33,11 @@ class Habitat {
   
   void update() {
     if(life.update(currentGeneration % drawGenerationEvery == 0)) {
+      if(currentGeneration % drawGenerationEvery == 0){
+        frameRate(30);
+      } else{
+        frameRate(30*1000);
+      }
       life.setSpecimen(snakes.get(currentSnake));
       life.startTiming();
       snakes.get(currentSnake).setPosition();
@@ -52,11 +57,10 @@ class Habitat {
     float fitnessSum=0, curSum, fitnessRoll;
     fitnessSum = fitnesses.sum();
     
-    println(fitnessSum);
-    
     ArrayList<Snake> newGeneration = new ArrayList<Snake>();
-    
+    print(fitnessSum + "\n");
     if(fitnessSum < 1e-9) {
+      print("Generation " + currentGeneration + " unusable\n");
       while(newGeneration.size() < population) {
         newGeneration.add(new Snake());
       }
@@ -79,7 +83,7 @@ class Habitat {
       
       int parent_index = 0;
       while(newGeneration.size() < population) {
-        newGeneration.add(new Snake(newGeneration.get(parent_index)));
+        newGeneration.add(new Snake(newGeneration.get(parent_index))); //<>//
         parent_index += 1;
       }
     }

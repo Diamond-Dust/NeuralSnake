@@ -1,7 +1,8 @@
 class LifeTime {
   CreatureDen den;
   int allowedTime, numOfMice, currentTime;
-  
+  int timeEpsilon = 10; // Independent of system time
+    
   LifeTime() {
     numOfMice = 5;
     allowedTime = -1;
@@ -42,8 +43,7 @@ class LifeTime {
   
   boolean update(boolean DoDraw) {
     if(!DoDraw) {
-       int timeNow = millis();
-       for(timeNow = millis(), currentTime = 0; allowedTime > currentTime; currentTime = millis()-timeNow) {
+       for(currentTime = 0; allowedTime > currentTime; currentTime += timeEpsilon) {
          den.update(DoDraw);
        }
     }
