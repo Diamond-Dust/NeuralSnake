@@ -58,8 +58,9 @@ class Habitat {
     fitnessSum = fitnesses.sum();
     
     ArrayList<Snake> newGeneration = new ArrayList<Snake>();
-    
+    print(fitnessSum + "\n");
     if(fitnessSum == 0) {
+      print("Generation " + currentGeneration + " unusable\n");
       while(newGeneration.size() < population) {
         newGeneration.add(new Snake());
       }

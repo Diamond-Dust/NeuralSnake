@@ -3,10 +3,10 @@ class Brain {
   float[][] Memory;
   boolean isSnek = false;
   
-  Matrix RandomiseMatrixNormalised(int w, int h, float from, float to) {
-    Matrix s = Matrix.random(w, h).timesEquals(to-from);
-    for(int i=0; i<w; i++)
-      for(int j=0; i<h; i++)
+  Matrix RandomiseMatrixNormalised(int h, int w, float from, float to) {
+    Matrix s = Matrix.random(h, w).timesEquals(to-from);
+    for(int i=0; i<h; i++)
+      for(int j=0; j<w; j++)
         s.set(i, j, s.get(i, j)+from);
     return s;
   }

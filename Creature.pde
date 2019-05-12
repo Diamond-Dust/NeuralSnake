@@ -20,7 +20,7 @@ abstract class Creature implements Hoverable {
     for (int i=0; i<rayNumber; i++) {
       Rays[i] = new Ray();
     }
-    lastOutput = brain.DecideAngle();
+    lastOutput = 0;
   };
   Creature(float Phi, float LToVTimesPhiFToLConstant) {
     phi = Phi;
@@ -29,7 +29,7 @@ abstract class Creature implements Hoverable {
     for (int i=0; i<rayNumber; i++) {
       Rays[i] = new Ray();
     }
-    lastOutput = brain.DecideAngle();
+    lastOutput = 0;
   }
   
   float getV() {
@@ -106,12 +106,11 @@ abstract class Creature implements Hoverable {
       DrawFOV();  
       DrawHead();
     }
-    //if(this instanceof Snake)
-    //  print(brain.DecideAngle() + " " + lastOutput + "\n");
-    if(lastOutput != -PI) {
+    if(lastOutput != 0) {
       float curOutput = brain.DecideAngle();
-      if(lastOutput != curOutput)
+      if(abs(lastOutput - curOutput) > 1e-3){
         hasReactedToInput = true;
+        }
       lastOutput = curOutput;
     }
     else
