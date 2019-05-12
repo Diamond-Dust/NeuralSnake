@@ -130,7 +130,15 @@ class CreatureDen {
   void IncreaseFitnessFromAreaTravelled() {
     Creature currentPossibleSnake = creatures.get(0);
     float area = (currentPossibleSnake.maxX - currentPossibleSnake.minX) * (currentPossibleSnake.maxY - currentPossibleSnake.minY);
+    currentPossibleSnake.minX = size[0]+1;
+    currentPossibleSnake.minY = size[1]+1;
+    currentPossibleSnake.maxX = -1;
+    currentPossibleSnake.maxY = -1;
     area /= (float)(size[1]*size[0]);             //  (0 ; 1)
+    if(area < 0.01) {
+      currentPossibleSnake.SetFitness(0.);
+      return;
+    }
     area = log(area+1);                           //  (0 ; log(2))
     area /= log(2);                               //  (0 ; 1)
     area = sqrt(area);                            //  (0 ; 1)
