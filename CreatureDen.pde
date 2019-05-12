@@ -135,7 +135,7 @@ class CreatureDen {
     currentPossibleSnake.maxX = -1;
     currentPossibleSnake.maxY = -1;
     area /= (float)(size[1]*size[0]);             //  (0 ; 1)
-    if(area < 0.01) {
+    if(area < 0.0004) {
       currentPossibleSnake.SetFitness(0.);
       return;
     }
