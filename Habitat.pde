@@ -83,7 +83,7 @@ class Habitat {
       int parent_index = 0;
       while(newGeneration.size() < population) {
         newGeneration.add(new Snake(newGeneration.get(parent_index))); //<>//
-        parent_index += 1;
+        parent_index += 1; //<>//
       }
     }
      //<>//
@@ -96,11 +96,11 @@ class Habitat {
     String cS = 'G'+str(currentGeneration)+" #"+str(currentSnake);
     rectMode(CORNERS);  
     fill(200);  
-    rect(0, size[1]-25, 50, size[1]);  
+    rect(0, size[1]-25, 75, size[1]);  
     fill(50);  
     textSize(14);
     textAlign(CENTER, CENTER);
-    text(cS, 0, size[1]-25, 50, size[1]);
+    text(cS, 0, size[1]-25, 75, size[1]);
     noFill();
   };
   

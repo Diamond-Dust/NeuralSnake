@@ -40,7 +40,7 @@ class CreatureDen {
   };
   
   void update(boolean DoDraw) {
-    boolean CanGoAhead; //<>// //<>// //<>//
+    boolean CanGoAhead; //<>// //<>// //<>// //<>//
     Point currentHeadPosition, futureHeadPosition;
     Creature currentCreature, currentPossibleSnake;
     ArrayList<Sighting> Sightings = new ArrayList<Sighting>();
@@ -60,7 +60,8 @@ class CreatureDen {
             
           if(currentCreature instanceof Snake && currentPossibleSnake instanceof Mouse 
             && currentCreature.headPosition.DistanceTo(currentPossibleSnake.headPosition) < consumptionDistance) {
-            currentCreature.IncreaseFitness(20);
+            currentCreature.miceCaught++;
+            currentCreature.IncreaseFitness(20*currentCreature.miceCaught);
             creatures.remove(j);
             creatures.add(new Mouse());
             continue;
@@ -126,6 +127,17 @@ class CreatureDen {
     
   };
   
+  void IncreaseFitnessFromAreaTravelled() {
+    Creature currentPossibleSnake = creatures.get(0);
+    float area = (currentPossibleSnake.maxX - currentPossibleSnake.minX) * (currentPossibleSnake.maxY - currentPossibleSnake.minY);
+    area /= (float)(size[1]*size[0]);             //  (0 ; 1)
+    area = log(area+1);                           //  (0 ; log(2))
+    area /= log(2);                               //  (0 ; 1)
+    area = sqrt(area);                            //  (0 ; 1)
+    area *= areaFitnessScale;                     //  (0 ; areaFitnessScale)
+    currentPossibleSnake.IncreaseFitness(area);
+  }
+  
   float getFitness() {
     Creature currentPossibleSnake;
     for(int j=0; j<creatures.size(); j++)
@@ -140,7 +152,7 @@ class CreatureDen {
   void resetFitness() {
     Creature currentPossibleSnake;
     for(int j=0; j<creatures.size(); j++)
-    { //<>//
+    { 
         currentPossibleSnake = creatures.get(j);
         if(currentPossibleSnake instanceof Snake)
           currentPossibleSnake.fitness = 0;

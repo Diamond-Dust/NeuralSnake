@@ -10,6 +10,7 @@ public float sightInterval = 5.;
 public float consumptionDistance = 15.;
 public float fitnessFromDistanceModifier = 1.25;
 public float brainMutationRate = 0.01;
+public float areaFitnessScale = 150;
 Habitat hub = new Habitat(10, 5, 2);
 
 void settings() { 
