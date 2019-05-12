@@ -56,7 +56,6 @@ class Habitat {
   void nextGeneration() {
     float fitnessSum=0, curSum, fitnessRoll;
     fitnessSum = fitnesses.sum();
-    
     ArrayList<Snake> newGeneration = new ArrayList<Snake>();
     print(fitnessSum + "\n");
     if(fitnessSum < 1e-9) {
@@ -88,6 +87,7 @@ class Habitat {
       }
     }
      //<>//
+    fitnesses.clear(); //<>//
     snakes = newGeneration;
     currentSnake = 0;
   };
