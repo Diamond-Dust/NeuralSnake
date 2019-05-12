@@ -73,6 +73,7 @@ class Habitat {
           if(curSum >= fitnessRoll) {
             fitnessSum -= fitnesses.get(i);
             newGeneration.add(snakes.get(i));
+            snakes.get(i).Coords.clear();
             snakes.remove(i);
             fitnesses.remove(i);
             break;
@@ -82,8 +83,8 @@ class Habitat {
       
       int parent_index = 0;
       while(newGeneration.size() < population) {
-        newGeneration.add(new Snake(newGeneration.get(parent_index))); //<>//
-        parent_index += 1; //<>//
+        newGeneration.add(new Snake(newGeneration.get(parent_index))); //<>// //<>//
+        parent_index += 1;
       }
     }
      //<>//
