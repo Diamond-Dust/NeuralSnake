@@ -52,9 +52,11 @@ class Habitat {
     float fitnessSum=0, curSum, fitnessRoll;
     fitnessSum = fitnesses.sum();
     
+    println(fitnessSum);
+    
     ArrayList<Snake> newGeneration = new ArrayList<Snake>();
     
-    if(fitnessSum == 0) {
+    if(fitnessSum < 1e-9) {
       while(newGeneration.size() < population) {
         newGeneration.add(new Snake());
       }

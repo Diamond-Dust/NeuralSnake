@@ -38,7 +38,7 @@ class Brain {
     for(int i=0; i<S.length; i++)
       for(int j=0; j<S[i].getRowDimension(); j++)
         for(int k=0; k<S[i].getColumnDimension(); k++)
-          S[i].set(j, k, S[i].get(j, k) * 1+random(-brainMutationRate, brainMutationRate));
+          S[i].set(j, k, S[i].get(j, k) * (1+random(-brainMutationRate, brainMutationRate)));
   }
   
   float rememberClosest() {

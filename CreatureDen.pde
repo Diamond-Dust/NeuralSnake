@@ -122,6 +122,8 @@ class CreatureDen {
     
     if(!currentPossibleSnake.hasReactedToInput)
       currentPossibleSnake.SetFitness(0.);
+      
+    println("    ", currentPossibleSnake.fitness);
   };
   
   float getFitness() {
