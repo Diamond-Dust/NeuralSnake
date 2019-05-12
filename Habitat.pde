@@ -33,6 +33,11 @@ class Habitat {
   
   void update() {
     if(life.update(currentGeneration % drawGenerationEvery == 0)) {
+      if(currentGeneration % drawGenerationEvery == 0){
+        frameRate(30);
+      } else{
+        frameRate(30*1000);
+      }
       life.setSpecimen(snakes.get(currentSnake));
       life.startTiming();
       snakes.get(currentSnake).setPosition();

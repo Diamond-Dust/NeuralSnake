@@ -120,8 +120,9 @@ class CreatureDen {
     }
     currentPossibleSnake.IncreaseFitness(pow(fitnessFromDistanceModifier, -minDistance/50));
     
-    if(!currentPossibleSnake.hasReactedToInput)
+    if(!currentPossibleSnake.hasReactedToInput){
       currentPossibleSnake.SetFitness(0.);
+    }
   };
   
   float getFitness() {

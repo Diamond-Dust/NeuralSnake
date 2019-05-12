@@ -66,8 +66,8 @@ public class Snake extends Creature{
     
     Coords.add(headPosition.clone());
     
-    brain = new Brain(Parent.brain);
-    brain.Mutate();
+    //brain = new Brain(Parent.brain);
+    //brain.Mutate();
   };
 
   //Snake-specific drawing
