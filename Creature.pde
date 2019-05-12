@@ -109,7 +109,7 @@ abstract class Creature implements Hoverable {
     }
     if(lastOutput != 0 && skip < 0) {
       float curOutput = brain.DecideAngle();
-      if(abs(lastOutput - curOutput) > 1e-2){
+      if(lastOutput == curOutput){
         hasReactedToInput = true;
         }
       lastOutput = curOutput;
