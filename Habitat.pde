@@ -54,11 +54,14 @@ class Habitat {
   };
   
   void nextGeneration() {
-    float fitnessSum=0, curSum, fitnessRoll;
+    double fitnessSum=0, curSum, fitnessRoll;
+    for(int i=0; i<fitnesses.size(); i++)
+      if(fitnesses.get(i) < 1e-3)
+        fitnesses.set(i, 0.0);
     fitnessSum = fitnesses.sum();
     ArrayList<Snake> newGeneration = new ArrayList<Snake>();
     print(fitnessSum + "\n");
-    if(fitnessSum < 1e-9) {
+    if(fitnessSum < 1e-6) {
       print("Generation " + currentGeneration + " unusable\n");
       while(newGeneration.size() < population) {
         newGeneration.add(new Snake());
@@ -66,29 +69,39 @@ class Habitat {
     }
     else {
       while(newGeneration.size() < population/2 + population%2) {
-        fitnessRoll = random(fitnessSum);
-        curSum = 0;
-        for(int i=0; i<snakes.size(); i++){
-          curSum += fitnesses.get(i);
-          if(curSum >= fitnessRoll) {
-            fitnessSum -= fitnesses.get(i);
-            newGeneration.add(snakes.get(i));
-            snakes.get(i).Coords.clear();
-            snakes.remove(i);
-            fitnesses.remove(i);
-            break;
+        if(fitnessSum > 1e-3) {
+          fitnessRoll = random((float)fitnessSum);
+          curSum = 0;
+          for(int i=0; i<snakes.size(); i++){
+            curSum = curSum + fitnesses.get(i);
+            if(curSum >= fitnessRoll) {
+              fitnessSum -= fitnesses.get(i);
+              newGeneration.add(snakes.get(i));
+              snakes.get(i).Coords.clear();
+              snakes.remove(i);
+              fitnesses.remove(i);
+              break;
+            }
           }
+        } //<>//
+        else {
+          int i = (int)random(snakes.size());
+          fitnessSum -= fitnesses.get(i);
+          newGeneration.add(snakes.get(i));
+          snakes.get(i).Coords.clear();
+          snakes.remove(i);
+          fitnesses.remove(i);
         }
       }
       
       int parent_index = 0;
       while(newGeneration.size() < population) {
-        newGeneration.add(new Snake(newGeneration.get(parent_index))); //<>// //<>//
+        newGeneration.add(new Snake(newGeneration.get(parent_index))); 
         parent_index += 1;
       }
     }
-     //<>//
-    fitnesses.clear(); //<>//
+     
+    fitnesses.clear(); 
     snakes = newGeneration;
     currentSnake = 0;
   };
