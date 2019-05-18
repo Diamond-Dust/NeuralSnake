@@ -2,6 +2,7 @@ class LifeTime {
   CreatureDen den;
   int allowedTime, numOfMice, currentTime;
   int timeEpsilon = 10; // Independent of system time
+  ArrayList<Point> mousePositions = new ArrayList<Point>();
     
   LifeTime() {
     numOfMice = 5;
@@ -13,11 +14,13 @@ class LifeTime {
     this.numOfMice = numOfMice;
     allowedTime = -1;
     currentTime = 0;
+    this.NewMousePositions();
   };
   LifeTime(int numOfMice, int seconds) {
     this.numOfMice = numOfMice;
     allowedTime = seconds*1000;
     currentTime = 0;
+    this.NewMousePositions();
   };
   
   void setTime(int time) {
@@ -27,8 +30,12 @@ class LifeTime {
     numOfMice = num;
   };
   void setSpecimen(Snake specimen) {
-    den = new CreatureDen(specimen, numOfMice);
+    den = new CreatureDen(specimen, numOfMice, mousePositions);
   };
+  void NewMousePositions() {
+    for(int i=0; i<numOfMice; i++)
+      mousePositions.add( new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin))) ); 
+  }
   
   void startTiming() {
     currentTime = 0;

@@ -8,6 +8,10 @@ class Mouse extends Creature {
     
     headColor = FOVColor = #FF0000; 
   }
+  Mouse(Point P) {
+    this();
+    headPosition = P;
+  }
   
   void update(boolean CanGoAhead, boolean DoDraw) {
     super.update(CanGoAhead, DoDraw); 

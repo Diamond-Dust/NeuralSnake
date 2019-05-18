@@ -1,24 +1,46 @@
 class CreatureDen {
   
   ArrayList<Creature> creatures = new ArrayList<Creature>();
+  ArrayList<Point> snakePositions = new ArrayList<Point>();
+  ArrayList<Point> mousePositions = new ArrayList<Point>();
+  int currentMouseIndex;
   
   CreatureDen() { };
   CreatureDen(int numberOfSnakes) {
-    for(int i=0; i<numberOfSnakes; i++)
-      creatures.add(new Snake());
+    currentMouseIndex = 0;
+    for(int i=0; i<numberOfSnakes; i++) {
+      snakePositions.add( new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin))) );
+      creatures.add(new Snake(snakePositions.get(i)));
+    }
   };
   CreatureDen(int numberOfSnakes, int numberOfMice) {
-    for(int i=0; i<numberOfSnakes; i++)
-      creatures.add(new Snake());
-    for(int i=0; i<numberOfMice; i++)
-      creatures.add(new Mouse());
+    currentMouseIndex = 0;
+    for(int i=0; i<numberOfSnakes; i++) {
+      snakePositions.add( new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin))) );
+      creatures.add(new Snake(snakePositions.get(i)));
+    }
+    for(int i=0; i<numberOfMice; i++) {
+      mousePositions.add( new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin))) );
+      creatures.add(new Mouse(mousePositions.get(i)));
+    }
   };
   CreatureDen(Snake specimen, int numberOfMice) {
+    currentMouseIndex = 0;
     creatures.add(specimen);
-    for(int i=0; i<numberOfMice; i++)
-      creatures.add(new Mouse());
+    for(int i=0; i<numberOfMice; i++) {
+      mousePositions.add( new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin))) );
+      creatures.add(new Mouse(mousePositions.get(i)));
+    } //<>//
   };
-  CreatureDen(Snake snake, Mouse mouse){
+  CreatureDen(Snake specimen, int numberOfMice, ArrayList<Point> MousePositions) {
+    currentMouseIndex = 0;
+    mousePositions = MousePositions;
+    creatures.add(specimen);
+    for(int i=0; i<numberOfMice; i++) {
+      creatures.add(new Mouse(mousePositions.get(i)));
+    }
+  };
+  CreatureDen(Snake snake, Mouse mouse){ //<>//
     creatures.add(snake);
     creatures.add(mouse);
   };
@@ -63,7 +85,9 @@ class CreatureDen {
             currentCreature.miceCaught++;
             currentCreature.IncreaseFitness(20*currentCreature.miceCaught);
             creatures.remove(j);
-            creatures.add(new Mouse());
+            creatures.add(new Mouse(mousePositions.get(currentMouseIndex)));
+            currentMouseIndex++;
+            currentMouseIndex %= mousePositions.size();
             continue;
           }
         

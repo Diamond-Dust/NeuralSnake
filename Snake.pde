@@ -42,6 +42,10 @@ public class Snake extends Creature{
     
     brain = new Brain(true);
   };
+  Snake(Point P) {
+    this();
+    headPosition = P;
+  };
   Snake(float L, float V, float Phi, float M) {
     super( V, Phi );
     l = L;
@@ -112,7 +116,7 @@ public class Snake extends Creature{
     beginShape();
     curveVertex(Coords.get(Coords.size()-1).x, Coords.get(Coords.size()-1).y);
     for(int i=Coords.size()-2; i>-1; i--)
-      {
+      { //<>//
         curveVertex(Coords.get(i).x, Coords.get(i).y);
         distance += sqrt(sq(Coords.get(i).x - Coords.get(i+1).x)+sq(Coords.get(i).y - Coords.get(i+1).y));
         if(distance >= l)

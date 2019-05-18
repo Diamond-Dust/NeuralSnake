@@ -2,31 +2,35 @@ class Habitat {
   LifeTime life;
   ArrayList<Snake> snakes;
   FloatList fitnesses;
+  Point currentSnakePosition;
   int currentSnake = 0, currentGeneration = 0;
   int population;
   
   Habitat(){
+    currentSnakePosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin)));
     life = new LifeTime(5, -1);
     snakes = new ArrayList<Snake>(1);
     population = 1;
-    snakes.add(new Snake());
+    snakes.add(new Snake(currentSnakePosition));
     life.setSpecimen(snakes.get(0));
   };
   Habitat(int numOfMice, int numOfSeconds) {
+    currentSnakePosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin)));
     life = new LifeTime(numOfMice, numOfSeconds);
     snakes = new ArrayList<Snake>(1);
-    snakes.add(new Snake());
+    snakes.add(new Snake(currentSnakePosition));
     population = 1;
     fitnesses = new FloatList(1);
     life.setSpecimen(snakes.get(0));
   };
   Habitat(int numOfSnakes, int numOfMice, int numOfSeconds) {
+    currentSnakePosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin)));
     life = new LifeTime(numOfMice, numOfSeconds);
     snakes = new ArrayList<Snake>(numOfSnakes);
     population = numOfSnakes;
     fitnesses = new FloatList(numOfSnakes);
     for(int i=0; i<numOfSnakes; i++){
-      snakes.add(new Snake());
+      snakes.add(new Snake(currentSnakePosition));
     }
     life.setSpecimen(snakes.get(0));
   };
@@ -58,6 +62,7 @@ class Habitat {
         loadGeneration();
       } else {
         nextGeneration();
+        life.NewMousePositions();
         currentGeneration++;
       }
     }
@@ -78,7 +83,7 @@ class Habitat {
     }
   }
   
-  void saveGeneration(String fName){
+  void saveGeneration(String fName){ //<>//
     PrintWriter out = createWriter(fName);
     for(Snake snek : snakes)
       out.println(snek.Serialize());
@@ -97,7 +102,7 @@ class Habitat {
     if(fitnessSum < 1e-6) {
       print("Generation " + currentGeneration + " unusable\n");
       while(newGeneration.size() < population) {
-        newGeneration.add(new Snake());
+        newGeneration.add(new Snake(currentSnakePosition));
       }
     }
     else {
