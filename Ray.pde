@@ -55,6 +55,7 @@ public class Ray extends Line{
       if(super.CalculateDistance(P) <= Interval) {
         //strokeWeight(sightInterval);
         //Draw(#FF00FF);
+        P.Draw(#FF00FF, 10);
         //super.Draw(#F0F0F0);
         //strokeWeight(1);
         return true;

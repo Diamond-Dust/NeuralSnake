@@ -51,7 +51,28 @@ class Brain {
   float DecideAngle() {
     if(!isSnek)
       return random(-PI/6, PI/6);
-    return -PI/6 + (float)FeedForward()*PI/3;
+    float angle = (float)-PI/6 + (float)(player_input*PI/3);
+    
+    // Create input matrix
+    Matrix input = new Matrix(1, 2*rayNumber);
+    for(int i=0; i<rayNumber; i++)
+      for(int j=0; j<2; j++)
+        input.set(0, i+j*rayNumber, 1 - sigmoid(Memory[i][j]));
+        
+    //Save training data
+    StringBuilder me = new StringBuilder("");
+    // Snake characteristics
+    for(int i=0; i<input.getRowDimension(); i++)
+      for(int j=0; j<input.getColumnDimension(); j++){
+         me.append(input.get(i, j));
+         me.append(';');
+       }
+    me.append(player_input);
+    trainer.println(me.toString());
+    trainer.flush();
+    //trainer.close();
+    player_input = 0.5;
+    return angle;
     
   };
   double FeedForward() {
@@ -65,8 +86,8 @@ class Brain {
     Matrix out = input.times(S[0]); // Output is 1 x 5 matrix
     for(int i=0; i<5; i++)
       out.set(0, i, sigmoid(out.get(0, i)));
-      
-    for(int i=1; i<S.length-1; i++) {
+       //<>//
+    for(int i=1; i<S.length-1; i++) { //<>//
       out = out.times(S[i]);          
       for(int j=0; j<out.getRowDimension(); j++)
         for(int k=0; k<out.getColumnDimension(); k++)
@@ -87,7 +108,7 @@ class Brain {
   void GetSightings(float[][] sightings) {
     if(!IsInputEmpty(sightings)){
       Memory = sightings; //<>//
-    } //<>//
+    }
   };
   
   double sigmoid(double x){

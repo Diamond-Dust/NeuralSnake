@@ -46,37 +46,12 @@ class Habitat {
     }
     
     if(snakes.size() <= currentSnake) {
-      if(saveCurrentGen){  
-        String fileName = 'G'+str(currentGeneration)+"_"+str(currentSnake);
-        saveGeneration(savePath + fileName);
-        println(fileName + " saved");
-        saveCurrentGen = false;
-      }
-      if(loadNextGen){
-        currentGeneration = 0;
-        loadNextGen = false;
-        loadGeneration();
-      } else {
-        nextGeneration();
-        currentGeneration++;
-      }
+      nextGeneration();
+      currentGeneration++;
     }
     
     writeGenInfo();
   };
-  
-  void loadGeneration(){
-    BufferedReader in = createReader(loadGen.getAbsolutePath());
-    snakes.clear();
-    String line = null;
-    try{
-      while((line = in.readLine()) != null)
-        snakes.add(new Snake(line));
-      in.close();
-    } catch(IOException e){
-      e.printStackTrace();
-    }
-  }
   
   void saveGeneration(String fName){
     PrintWriter out = createWriter(fName);
@@ -116,8 +91,8 @@ class Habitat {
               break;
             }
           }
-        } //<>//
-        else {
+        }
+        else { //<>//
           int i = (int)random(snakes.size());
           fitnessSum -= fitnesses.get(i);
           newGeneration.add(snakes.get(i));

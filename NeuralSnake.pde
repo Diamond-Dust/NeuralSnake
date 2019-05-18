@@ -1,7 +1,6 @@
 import Jama.*; // Java matrix
 
-public String savePath = "./snakes/";
-public File loadGen;
+public PrintWriter trainer;
 
 public int size[] = {640, 360};
 public color backgroundColor = #777777;
@@ -14,13 +13,14 @@ public float consumptionDistance = 15.;
 public float fitnessFromDistanceModifier = 1.25;
 public float brainMutationRate = 0.01;
 public float areaFitnessScale = 150;
-Habitat hub = new Habitat(10, 5, 2);
+Habitat hub = new Habitat(1, 5, 200);
 
 void settings() { 
   size(size[0], size[1]);
 }
 
 void setup() {
+  trainer = createWriter("./t_data/training_data");
   frameRate(30);
   background(backgroundColor);
 }
@@ -34,24 +34,18 @@ void draw() {
     clear();
     background(backgroundColor);
     hub.update();
-    //wait = true; //Comment out if smooth simulation is desired
+    wait = true; //Comment out if smooth simulation is desired
   }
 }
+
+public double player_input = 0.5;
+public double step = 0.2;
 
 void keyPressed() {
-  if(key == 's' || key == 'S'){
-    saveCurrentGen = true;
-  } else if(key == 'l' || key == 'L') {
-    selectInput("Select file containing valid generation info:", "loadGeneration");
-  } else {
-     wait = false;
-    frameRate(30*1000);
-  }
+   wait = false;
+   if(key == CODED)
+     if(keyCode == LEFT)
+       player_input = player_input -step < 0 ? 0 : player_input - step;
+     else if(keyCode == RIGHT)
+       player_input = player_input +step > 1 ? 1 : player_input + step;
 }
-
-
-void loadGeneration(File gen){
-  println(gen.getAbsolutePath());
-  loadGen = gen;
-  loadNextGen = true;
-};

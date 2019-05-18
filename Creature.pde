@@ -52,7 +52,7 @@ abstract class Creature implements Hoverable {
     fitness = F;
   };
   void IncreaseFitness(float By) {
-    fitness += By; //<>//
+    fitness += By; //<>// //<>//
   };
   
   void setPosition() {
@@ -117,7 +117,7 @@ abstract class Creature implements Hoverable {
         minY = headPosition.y;
     }
     
-    if(DoDraw) {
+    if(DoDraw && brain.isSnek) {
       DrawFOV();  
       DrawHead();
     }

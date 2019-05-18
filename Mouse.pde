@@ -11,11 +11,11 @@ class Mouse extends Creature {
   
   void update(boolean CanGoAhead, boolean DoDraw) {
     super.update(CanGoAhead, DoDraw); 
-    
-    if(DoDraw) {
-      float[] info = {v, phi, f, m};
-      String[] infoNames = {"V", "Phi", "F", "M"};
-      HoverInfo(info, infoNames);  
-    }
+    // Player doesn't can't see mice
+    //if(DoDraw) {
+    //  float[] info = {v, phi, f, m};
+    //  String[] infoNames = {"V", "Phi", "F", "M"};
+    //  HoverInfo(info, infoNames);  
+    //}
   }
 }

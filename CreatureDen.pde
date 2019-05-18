@@ -64,6 +64,7 @@ class CreatureDen {
             currentCreature.IncreaseFitness(20*currentCreature.miceCaught);
             creatures.remove(j);
             creatures.add(new Mouse());
+            println("Ate a mouse!");
             continue;
           }
         
