@@ -61,7 +61,8 @@ public class Snake extends Creature{
     v = Float.parseFloat(values[index++]);
     phi = Float.parseFloat(values[index++]);
     m = Float.parseFloat(values[index++]);
-    
+    f = -phi/(2*PI)+1.05;    
+        
     FOVColor = headColor = color(0, int(random(128, 255)), 0);
     tailColor = color(0, 0, int(random(128, 255)));
     
@@ -115,7 +116,7 @@ public class Snake extends Creature{
       {
         curveVertex(Coords.get(i).x, Coords.get(i).y);
         distance += sqrt(sq(Coords.get(i).x - Coords.get(i+1).x)+sq(Coords.get(i).y - Coords.get(i+1).y));
-        if(distance >= l)
+        if(distance >= l) //<>//
         { //<>//
           for(; i>-1; i--)
           {
@@ -142,12 +143,12 @@ public class Snake extends Creature{
     }
   }
   
-  //Does that pass through?
+  //Does that pass through? //<>//
   boolean IsPassedThrough(Point start, Point end, boolean DoDraw) { 
     if(Coords.size() < 2)
       return false;
     else
-    {
+    { //<>//
       Point P; 
       Segment snakePart = new Segment(), checkedPart = new Segment(start, end);
       for(int i=0; i<Coords.size()-1; i++)
