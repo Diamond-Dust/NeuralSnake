@@ -66,15 +66,16 @@ class Brain {
     // Create input matrix
     Matrix inputl = new Matrix(1, rayNumber/2);
     for(int i=0; i<rayNumber/2; i++)
-        inputl.set(0, i, 1 - sigmoid(Memory[i]));
+        inputl.set(0, i, 1 - logistic(Memory[i], 1./100, 0, 1));
     yl=HalfFeedForward(inputl);
         
     Matrix inputp = new Matrix(1, rayNumber/2);
     for(int i=0; i<rayNumber/2; i++)
-        inputp.set(0, i, 1 - sigmoid(Memory[rayNumber-1-i]));
+        inputp.set(0, i, 1 - logistic(Memory[rayNumber-1-i], 1./100, 0, 1));
     yp=HalfFeedForward(inputp);
     
-    return (float)sigmoid((yp-yl));  //<>//
+    println("..",yp,"-",yl,"=",yp-yl," then to ", logistic((yp-yl), 1, 0, 1)); //<>//
+    return (float)logistic((yp-yl), 1e6d, 0, 1);
     
   }
   
@@ -110,6 +111,9 @@ class Brain {
     }
   };
   
+  double logistic(double x, double k, double mid, double max){
+    return max / (1.0d + (double) Math.exp(-k*(x-mid)));
+  }
   double sigmoid(double x){
     return 1.0d / (1.0d + (double) Math.exp(-x));
   }
