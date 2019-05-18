@@ -105,14 +105,9 @@ class Brain {
   
   void GetSightings(float[][] sightings) {
     if(!IsInputEmpty(sightings)){
-<<<<<<< HEAD
       for(int i=0; i<rayNumber; i++)
         Memory[i] = sightings[i][0];
     }
-=======
-      Memory = sightings; 
-    } 
->>>>>>> develop_mouseplace
   };
   
   double logistic(double x, double k, double mid, double max){
