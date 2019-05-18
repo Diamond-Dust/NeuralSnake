@@ -5,6 +5,7 @@ class Habitat {
   Point currentSnakePosition;
   int currentSnake = 0, currentGeneration = 0;
   int population;
+  boolean trained = false;
   
   Habitat(){
     currentSnakePosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin)));
@@ -36,6 +37,10 @@ class Habitat {
   };
   
   void update() {
+    if(!trained){
+      trained = true;
+      snakes.get(currentSnake).brain.train(trainPath + "training_data_5k");
+    }
     if(life.update(currentGeneration % drawGenerationEvery == 0)) {
       if(currentGeneration % drawGenerationEvery == 0){
         frameRate(30);
@@ -56,34 +61,15 @@ class Habitat {
         println(fileName + " saved");
         saveCurrentGen = false;
       }
-      if(loadNextGen){
-        currentGeneration = 0;
-        loadNextGen = false;
-        loadGeneration();
-      } else {
-        nextGeneration();
-        life.NewMousePositions();
-        currentGeneration++;
-      }
+      nextGeneration();
+      life.NewMousePositions();
+      currentGeneration++;
     }
     
     writeGenInfo();
   };
   
-  void loadGeneration(){
-    BufferedReader in = createReader(loadGen.getAbsolutePath());
-    snakes.clear();
-    String line = null;
-    try{
-      while((line = in.readLine()) != null)
-        snakes.add(new Snake(line));
-      in.close();
-    } catch(IOException e){
-      e.printStackTrace();
-    }
-  }
-  
-  void saveGeneration(String fName){ //<>//
+  void saveGeneration(String fName){
     PrintWriter out = createWriter(fName);
     for(Snake snek : snakes)
       out.println(snek.Serialize());
@@ -106,7 +92,7 @@ class Habitat {
       while(newGeneration.size() < population) {
         newGeneration.add(new Snake());
       }
-    }
+    } //<>//
     else {
       while(newGeneration.size() < population/2 + population%2) {
         if(fitnessSum > 1e-3) {

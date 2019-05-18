@@ -82,7 +82,7 @@ class Brain {
       if(input[i][0] != Float.POSITIVE_INFINITY)
         return false;
     return true;
-  }
+  };
   
   void GetSightings(float[][] sightings) {
     if(!IsInputEmpty(sightings)){
@@ -92,6 +92,94 @@ class Brain {
   
   double sigmoid(double x){
     return 1.0d / (1.0d + (double) Math.exp(-x));
+  };
+  
+  double der_sigmoid(double x){
+    return sigmoid(x)*(1-sigmoid(x));
+  };
+  
+  void train(String path){    
+    Matrix[] data_set = parseData(path);
+    Matrix X_in = data_set[0];
+    Matrix Target = data_set[1];
+    
+    float dw = 0.02;
+    int max_epochs = 1000;
+    double cost = calculateCost(X_in, Target);
+    while(max_epochs > 0 && cost > 1e-2){
+      Matrix S_0 = S[0].copy();
+      Matrix S_1 = S[1].copy();
+      Matrix S_2 = S[2].copy();
+      for(Matrix s : S)
+        s.plusEquals(RandomiseMatrixNormalised(s.getRowDimension(), s.getColumnDimension(), -dw, dw));
+      double n_cost = calculateCost(X_in, Target);
+      if(n_cost > cost){
+        S[0] = S_0;
+        S[1] = S_1;
+        S[2] = S_2;
+        println("Cost Unusable: " + n_cost);
+      } else {
+        cost = n_cost;
+        println("Cost: " + cost);
+      }
+      max_epochs--;
+    } 
+  };
+  
+  double calculateCost(Matrix X_in, Matrix Target){
+    double cost = 0.0;
+    for(int n=0; n<X_in.getRowDimension(); n++){
+      Matrix input = new Matrix(1, 2*rayNumber);
+      for(int j=0; j<input.getColumnDimension(); j++)
+        input.set(0, j, X_in.get(n, j));
+      // Feed forward through layers
+      Matrix out = input.times(S[0]); // Output is 1 x 5 matrix
+      for(int i=0; i<5; i++)
+        out.set(0, i, sigmoid(out.get(0, i)));
+        
+      for(int i=1; i<S.length-1; i++) {
+        out = out.times(S[i]);          
+        for(int j=0; j<out.getRowDimension(); j++)
+          for(int k=0; k<out.getColumnDimension(); k++)
+            out.set(j, k, sigmoid(out.get(j, k)));
+      }
+        
+      out = out.times(S[S.length-1]);          // Output is 1 x 1 matrix
+      cost += pow((float)(sigmoid(out.get(0,0)) - Target.get(n, 0)), 2);  
+    }
+    return cost;
   }
+  
+  Matrix[] parseData(String path){
+    println(in);
+    //BufferedReader in = createReader(path);
+    Matrix X_in;
+    Matrix Target;
+    int sets = 0;
+    try{
+      while(in.readLine() != null) sets++;
+      in.close();
+      in = createReader(path);
+      String line = null;
+      X_in = new Matrix(sets, 2*rayNumber);
+      Target = new Matrix(sets, 1);
+      int index = 0;
+      while((line = in.readLine()) != null){
+        String [] values = line.split(";");
+        for(int i=0; i<2*rayNumber; i++){
+          X_in.set(index, i, Double.parseDouble(values[i]));
+        }
+        Target.set(index, 0, Double.parseDouble(values[2*rayNumber]));
+        index++;
+      }
+      Matrix arr[] = {X_in, Target};
+      return arr;
+    } catch(IOException e){
+      e.printStackTrace();
+    }
+    return null;
+  }
+  
+  
   
 };

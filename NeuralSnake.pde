@@ -1,7 +1,8 @@
 import Jama.*; // Java matrix
 
 public String savePath = "./snakes/";
-public File loadGen;
+public String trainPath = "./t_data/";
+BufferedReader in;
 
 public int size[] = {640, 360};
 public color backgroundColor = #777777;
@@ -14,14 +15,15 @@ public float consumptionDistance = 15.;
 public float fitnessFromDistanceModifier = 1.25;
 public float brainMutationRate = 0.01;
 public float areaFitnessScale = 150;
-Habitat hub = new Habitat(10, 5, 2);
+Habitat hub = new Habitat(1, 5, 200);
 
 void settings() { 
   size(size[0], size[1]);
+  in = createReader("./t_data/training_data_5k");
 }
 
 void setup() {
-  frameRate(30);
+  frameRate(60);
   background(backgroundColor);
 }
 
@@ -48,10 +50,3 @@ void keyPressed() {
     frameRate(30*1000);
   }
 }
-
-
-void loadGeneration(File gen){
-  println(gen.getAbsolutePath());
-  loadGen = gen;
-  loadNextGen = true;
-};

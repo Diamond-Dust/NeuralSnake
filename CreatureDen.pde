@@ -4,6 +4,7 @@ class CreatureDen {
   ArrayList<Point> snakePositions = new ArrayList<Point>();
   ArrayList<Point> mousePositions = new ArrayList<Point>();
   int currentMouseIndex;
+  boolean trained = false;
   
   CreatureDen() { };
   CreatureDen(int numberOfSnakes) {

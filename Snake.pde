@@ -143,12 +143,12 @@ public class Snake extends Creature{
   }
   
   //Does that pass through?
-  boolean IsPassedThrough(Point start, Point end, boolean DoDraw) { 
+  boolean IsPassedThrough(Point start, Point end, boolean DoDraw) {  //<>//
     if(Coords.size() < 2)
       return false;
     else
     {
-      Point P; 
+      Point P;  //<>//
       Segment snakePart = new Segment(), checkedPart = new Segment(start, end);
       for(int i=0; i<Coords.size()-1; i++)
       {
