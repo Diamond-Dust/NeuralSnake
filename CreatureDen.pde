@@ -10,14 +10,14 @@ class CreatureDen {
     currentMouseIndex = 0;
     for(int i=0; i<numberOfSnakes; i++) {
       snakePositions.add( new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin))) );
-      creatures.add(new Snake(snakePositions.get(i)));
+      creatures.add(new Snake());
     }
   };
   CreatureDen(int numberOfSnakes, int numberOfMice) {
     currentMouseIndex = 0;
     for(int i=0; i<numberOfSnakes; i++) {
       snakePositions.add( new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin))) );
-      creatures.add(new Snake(snakePositions.get(i)));
+      creatures.add(new Snake());
     }
     for(int i=0; i<numberOfMice; i++) {
       mousePositions.add( new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin))) );
@@ -62,7 +62,7 @@ class CreatureDen {
   };
   
   void update(boolean DoDraw) {
-    boolean CanGoAhead; //<>// //<>// //<>// //<>//
+    boolean CanGoAhead;    
     Point currentHeadPosition, futureHeadPosition;
     Creature currentCreature, currentPossibleSnake;
     ArrayList<Sighting> Sightings = new ArrayList<Sighting>();
@@ -117,7 +117,7 @@ class CreatureDen {
     
     for(int i=0; i<sightings.size(); i++) {
       if(parsed[sightings.get(i).rayIndex][0] > sightings.get(i).Distance) {
-        parsed[sightings.get(i).rayIndex][0] = sightings.get(i).Distance; //<>//
+        parsed[sightings.get(i).rayIndex][0] = sightings.get(i).Distance; 
         parsed[sightings.get(i).rayIndex][1] = sightings.get(i).relativeAngle;
       }
     }

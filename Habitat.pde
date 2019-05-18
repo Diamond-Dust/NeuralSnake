@@ -11,14 +11,14 @@ class Habitat {
     life = new LifeTime(5, -1);
     snakes = new ArrayList<Snake>(1);
     population = 1;
-    snakes.add(new Snake(currentSnakePosition));
+    snakes.add(new Snake());
     life.setSpecimen(snakes.get(0));
   };
   Habitat(int numOfMice, int numOfSeconds) {
     currentSnakePosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin)));
     life = new LifeTime(numOfMice, numOfSeconds);
     snakes = new ArrayList<Snake>(1);
-    snakes.add(new Snake(currentSnakePosition));
+    snakes.add(new Snake());
     population = 1;
     fitnesses = new FloatList(1);
     life.setSpecimen(snakes.get(0));
@@ -30,7 +30,7 @@ class Habitat {
     population = numOfSnakes;
     fitnesses = new FloatList(numOfSnakes);
     for(int i=0; i<numOfSnakes; i++){
-      snakes.add(new Snake(currentSnakePosition));
+      snakes.add(new Snake());
     }
     life.setSpecimen(snakes.get(0));
   };
@@ -45,7 +45,7 @@ class Habitat {
       fitnesses.append(life.popFitness());
       life.setSpecimen(snakes.get(currentSnake));
       life.startTiming();
-      snakes.get(currentSnake).setPosition();
+      snakes.get(currentSnake).setPosition(currentSnakePosition);
       currentSnake++;
     }
     
@@ -92,6 +92,8 @@ class Habitat {
   };
   
   void nextGeneration() {
+    currentSnakePosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin)));
+    
     double fitnessSum=0, curSum, fitnessRoll;
     for(int i=0; i<fitnesses.size(); i++)
       if(fitnesses.get(i) < 1e-3)
@@ -102,7 +104,7 @@ class Habitat {
     if(fitnessSum < 1e-6) {
       print("Generation " + currentGeneration + " unusable\n");
       while(newGeneration.size() < population) {
-        newGeneration.add(new Snake(currentSnakePosition));
+        newGeneration.add(new Snake());
       }
     }
     else {
@@ -121,7 +123,7 @@ class Habitat {
               break;
             }
           }
-        } //<>//
+        } 
         else {
           int i = (int)random(snakes.size());
           fitnessSum -= fitnesses.get(i);

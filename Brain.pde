@@ -74,7 +74,7 @@ class Brain {
     }
       
     out = out.times(S[S.length-1]);          // Output is 1 x 1 matrix
-    return sigmoid(out.get(0,0));
+    return sigmoid(out.get(0,0)); //<>//
   }
   
   boolean IsInputEmpty(float[][] input) {
@@ -86,8 +86,8 @@ class Brain {
   
   void GetSightings(float[][] sightings) {
     if(!IsInputEmpty(sightings)){
-      Memory = sightings; //<>//
-    } //<>//
+      Memory = sightings; 
+    } 
   };
   
   double sigmoid(double x){

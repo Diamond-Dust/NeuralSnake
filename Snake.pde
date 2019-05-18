@@ -42,10 +42,6 @@ public class Snake extends Creature{
     
     brain = new Brain(true);
   };
-  Snake(Point P) {
-    this();
-    headPosition = P;
-  };
   Snake(float L, float V, float Phi, float M) {
     super( V, Phi );
     l = L;
@@ -116,11 +112,11 @@ public class Snake extends Creature{
     beginShape();
     curveVertex(Coords.get(Coords.size()-1).x, Coords.get(Coords.size()-1).y);
     for(int i=Coords.size()-2; i>-1; i--)
-      { //<>//
+      {
         curveVertex(Coords.get(i).x, Coords.get(i).y);
         distance += sqrt(sq(Coords.get(i).x - Coords.get(i+1).x)+sq(Coords.get(i).y - Coords.get(i+1).y));
         if(distance >= l)
-        {
+        { //<>//
           for(; i>-1; i--)
           {
             Coords.remove(0);
@@ -147,12 +143,12 @@ public class Snake extends Creature{
   }
   
   //Does that pass through?
-  boolean IsPassedThrough(Point start, Point end, boolean DoDraw) { //<>//
+  boolean IsPassedThrough(Point start, Point end, boolean DoDraw) { 
     if(Coords.size() < 2)
       return false;
     else
     {
-      Point P; //<>//
+      Point P; 
       Segment snakePart = new Segment(), checkedPart = new Segment(start, end);
       for(int i=0; i<Coords.size()-1; i++)
       {

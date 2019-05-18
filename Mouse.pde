@@ -10,7 +10,7 @@ class Mouse extends Creature {
   }
   Mouse(Point P) {
     this();
-    headPosition = P;
+    headPosition = P.clone();
   }
   
   void update(boolean CanGoAhead, boolean DoDraw) {
