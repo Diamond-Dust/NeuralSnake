@@ -61,7 +61,7 @@ class Habitat {
     fitnessSum = fitnesses.sum();
     ArrayList<Snake> newGeneration = new ArrayList<Snake>();
     print(fitnessSum + "\n");
-    if(fitnessSum < 1e-6) {
+    if(fitnessSum <= 1e-3) {
       print("Generation " + currentGeneration + " unusable\n");
       while(newGeneration.size() < population) {
         newGeneration.add(new Snake());
@@ -75,22 +75,22 @@ class Habitat {
           for(int i=0; i<snakes.size(); i++){
             curSum = curSum + fitnesses.get(i);
             if(curSum >= fitnessRoll) {
-              fitnessSum -= fitnesses.get(i);
+              //fitnessSum -= fitnesses.get(i);
               newGeneration.add(snakes.get(i));
               snakes.get(i).Coords.clear();
-              snakes.remove(i);
-              fitnesses.remove(i);
+              //snakes.remove(i);
+              //fitnesses.remove(i);
               break;
             }
           }
         } //<>//
         else {
           int i = (int)random(snakes.size());
-          fitnessSum -= fitnesses.get(i);
+          //fitnessSum -= fitnesses.get(i);
           newGeneration.add(snakes.get(i));
           snakes.get(i).Coords.clear();
-          snakes.remove(i);
-          fitnesses.remove(i);
+          //snakes.remove(i);
+          //fitnesses.remove(i);
         }
       }
       

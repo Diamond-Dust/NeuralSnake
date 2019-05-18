@@ -1,6 +1,6 @@
 class Brain {
   Matrix[] S = new Matrix[3];
-  float[][] Memory;
+  float[] Memory;
   boolean isSnek = false;
   
   Matrix RandomiseMatrixNormalised(int h, int w, float from, float to) {
@@ -12,22 +12,28 @@ class Brain {
   }
   
   Brain() {
-    Memory = new float[rayNumber][2];
+    Memory = new float[rayNumber];
+    for(int i=0; i<Memory.length; i++)
+        Memory[i] = Float.POSITIVE_INFINITY;
     
-    S[0] = RandomiseMatrixNormalised(rayNumber*2, 5, -5, 3);      // Synapses between Input -> Layer1
+    S[0] = RandomiseMatrixNormalised(rayNumber/2, 5, -5, 3);      // Synapses between Input -> Layer1
     S[1] = RandomiseMatrixNormalised(5, 5, -5, 3);                // Synapses between Layer1 -> Layer2
     S[2] = RandomiseMatrixNormalised(5, 1, -5, 3);                // Synapses between Layer2 -> Output 
   };
   Brain(boolean isSnake) {
-    Memory = new float[rayNumber][2];
+    Memory = new float[rayNumber];
+    for(int i=0; i<Memory.length; i++)
+        Memory[i] = Float.POSITIVE_INFINITY;
     isSnek = isSnake;
     
-    S[0] = RandomiseMatrixNormalised(rayNumber*2, 5, -5, 3);      // Synapses between Input -> Layer1
+    S[0] = RandomiseMatrixNormalised(rayNumber/2, 5, -5, 3);      // Synapses between Input -> Layer1
     S[1] = RandomiseMatrixNormalised(5, 5, -5, 3);                // Synapses between Layer1 -> Layer2
     S[2] = RandomiseMatrixNormalised(5, 1, -5, 3);                // Synapses between Layer2 -> Output 
   };
   Brain(Brain Parent) {
-    Memory = new float[Parent.Memory.length][Parent.Memory[1].length];
+    Memory = new float[Parent.Memory.length];
+    for(int i=0; i<Memory.length; i++)
+        Memory[i] = Float.POSITIVE_INFINITY;
     isSnek = Parent.isSnek;
     
     for(int i=0; i<Parent.S.length; i++)
@@ -38,29 +44,41 @@ class Brain {
     for(int i=0; i<S.length; i++)
       for(int j=0; j<S[i].getRowDimension(); j++)
         for(int k=0; k<S[i].getColumnDimension(); k++)
-          S[i].set(j, k, (abs((float)S[i].get(j, k)) < 1e-6) ? random(-brainMutationRate, brainMutationRate) :  S[i].get(j, k) * (1+random(-brainMutationRate, brainMutationRate)));
+          if(random(0, 1.) < brainMutationRate)
+            S[i].set(j, k, (abs((float)S[i].get(j, k)) < 1e-6) ? random(-brainMutationSpread, brainMutationSpread) :  S[i].get(j, k) * (1+random(-brainMutationSpread, brainMutationSpread)));
   }
   
   float rememberClosest() {
-    float minDistSighting = Memory[0][0];
+    float minDistSighting = Memory[0];
     for(int i=1; i<rayNumber; i++)
-      minDistSighting = (Memory[i][0] < minDistSighting) ? Memory[i][0] : minDistSighting;
+      minDistSighting = (Memory[i] < minDistSighting) ? Memory[i] : minDistSighting;
     return minDistSighting;
   }
   
   float DecideAngle() {
     if(!isSnek)
       return random(-PI/6, PI/6);
-    return -PI/6 + (float)FeedForward()*PI/3;
-    
+    return -PI/6 + FeedForward()*PI/3;
   };
-  double FeedForward() {
+  
+  float FeedForward() {
+    double yl, yp;
     // Create input matrix
-    Matrix input = new Matrix(1, 2*rayNumber);
-    for(int i=0; i<rayNumber; i++)
-      for(int j=0; j<2; j++)
-        input.set(0, i+j*rayNumber, 1 - sigmoid(Memory[i][j]));
+    Matrix inputl = new Matrix(1, rayNumber/2);
+    for(int i=0; i<rayNumber/2; i++)
+        inputl.set(0, i, 1 - sigmoid(Memory[i]));
+    yl=HalfFeedForward(inputl);
+        
+    Matrix inputp = new Matrix(1, rayNumber/2);
+    for(int i=0; i<rayNumber/2; i++)
+        inputp.set(0, i, 1 - sigmoid(Memory[rayNumber-1-i]));
+    yp=HalfFeedForward(inputp);
     
+    return (float)(yp-yl)/2.; //<>//
+    
+  }
+  
+  double HalfFeedForward(Matrix input) {
     // Feed forward through layers
     Matrix out = input.times(S[0]); // Output is 1 x 5 matrix
     for(int i=0; i<5; i++)
@@ -86,8 +104,10 @@ class Brain {
   
   void GetSightings(float[][] sightings) {
     if(!IsInputEmpty(sightings)){
-      Memory = sightings; //<>//
-    } //<>//
+      //Memory = sightings; 
+      for(int i=0; i<rayNumber; i++)
+        Memory[i] = sightings[i][0];
+    }
   };
   
   double sigmoid(double x){
