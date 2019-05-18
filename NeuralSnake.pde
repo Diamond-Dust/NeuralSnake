@@ -1,6 +1,7 @@
 import Jama.*; // Java matrix
 
 public String savePath = "./snakes/";
+public File loadGen;
 
 public int size[] = {640, 360};
 public color backgroundColor = #777777;
@@ -26,6 +27,7 @@ void setup() {
 
 public boolean wait = true;
 public boolean saveCurrentGen = false;
+public boolean loadNextGen = false;
 
 void draw() { 
   if(!wait) {
@@ -39,8 +41,17 @@ void draw() {
 void keyPressed() {
   if(key == 's' || key == 'S'){
     saveCurrentGen = true;
+  } else if(key == 'l' || key == 'L') {
+    selectInput("Select file containing valid generation info:", "loadGeneration");
   } else {
      wait = false;
     frameRate(30*1000);
   }
 }
+
+
+void loadGeneration(File gen){
+  println(gen.getAbsolutePath());
+  loadGen = gen;
+  loadNextGen = true;
+};

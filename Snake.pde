@@ -53,6 +53,27 @@ public class Snake extends Creature{
     Coords.add(headPosition.clone());
     brain = new Brain(true);
   };
+  Snake(String data) {
+    String [] values = data.split(";");
+    int index = 0;
+    
+    l = Float.parseFloat(values[index++]);
+    v = Float.parseFloat(values[index++]);
+    phi = Float.parseFloat(values[index++]);
+    m = Float.parseFloat(values[index++]);
+    
+    FOVColor = headColor = color(0, int(random(128, 255)), 0);
+    tailColor = color(0, 0, int(random(128, 255)));
+    
+    Coords.add(headPosition.clone());
+    brain = new Brain(true);
+    for(Matrix s : brain.S){
+      for(int i=0; i<s.getRowDimension(); i++)
+        for(int j=0; j<s.getColumnDimension(); j++){
+           s.set(i, j, Double.parseDouble(values[index++]));
+         }
+    }
+  };
   Snake(Snake Parent) {
     super();
     // This creates very fast creatures, needs to be looked into
