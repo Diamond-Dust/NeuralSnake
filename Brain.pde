@@ -74,7 +74,7 @@ class Brain {
         inputp.set(0, i, 1 - sigmoid(Memory[rayNumber-1-i]));
     yp=HalfFeedForward(inputp);
     
-    return (float)(yp-yl)/2.; //<>//
+    return (float)sigmoid((yp-yl));  //<>//
     
   }
   
@@ -92,7 +92,7 @@ class Brain {
     }
       
     out = out.times(S[S.length-1]);          // Output is 1 x 1 matrix
-    return sigmoid(out.get(0,0));
+    return out.get(0,0);
   }
   
   boolean IsInputEmpty(float[][] input) {
