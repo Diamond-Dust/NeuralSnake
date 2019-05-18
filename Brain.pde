@@ -105,7 +105,6 @@ class Brain {
   
   void GetSightings(float[][] sightings) {
     if(!IsInputEmpty(sightings)){
-      //Memory = sightings; 
       for(int i=0; i<rayNumber; i++)
         Memory[i] = sightings[i][0];
     }

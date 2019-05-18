@@ -9,7 +9,6 @@ abstract class Creature implements Hoverable {
   
   float fitness = 0;
   int miceCaught;
-  float minX = size[0]+1, minY = size[1]+1, maxX = -1, maxY = -1;
   
   Ray[] Rays = new Ray[rayNumber];
   
@@ -55,7 +54,7 @@ abstract class Creature implements Hoverable {
     fitness *= F;
   };
   void IncreaseFitness(float By) {
-    fitness += By; //<>//
+    fitness += By; 
   };
   
   void setPosition() {
@@ -110,14 +109,6 @@ abstract class Creature implements Hoverable {
       courseAngle = (courseAngle+delta)%(2*PI);
       headPosition.x = min(max(0, headPosition.x+v*cos(courseAngle)), size[0]);
       headPosition.y = min(max(0, headPosition.y+v*sin(courseAngle)), size[1]);
-      if(headPosition.x > maxX)
-        maxX = headPosition.x;
-      if(headPosition.y > maxY)
-        maxY = headPosition.y;
-      if(headPosition.x < minX)
-        minX = headPosition.x;
-      if(headPosition.y < maxY)
-        minY = headPosition.y;
     }
     
     if(DoDraw) {
