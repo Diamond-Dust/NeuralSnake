@@ -2,10 +2,12 @@ class Habitat {
   LifeTime life;
   ArrayList<Snake> snakes;
   FloatList fitnesses;
+  Point currentSnakePosition;
   int currentSnake = 0, currentGeneration = 0;
   int population;
   
   Habitat(){
+    currentSnakePosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin)));
     life = new LifeTime(5, -1);
     snakes = new ArrayList<Snake>(1);
     population = 1;
@@ -13,6 +15,7 @@ class Habitat {
     life.setSpecimen(snakes.get(0));
   };
   Habitat(int numOfMice, int numOfSeconds) {
+    currentSnakePosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin)));
     life = new LifeTime(numOfMice, numOfSeconds);
     snakes = new ArrayList<Snake>(1);
     snakes.add(new Snake());
@@ -21,6 +24,7 @@ class Habitat {
     life.setSpecimen(snakes.get(0));
   };
   Habitat(int numOfSnakes, int numOfMice, int numOfSeconds) {
+    currentSnakePosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin)));
     life = new LifeTime(numOfMice, numOfSeconds);
     snakes = new ArrayList<Snake>(numOfSnakes);
     population = numOfSnakes;
@@ -41,19 +45,55 @@ class Habitat {
       fitnesses.append(life.popFitness());
       life.setSpecimen(snakes.get(currentSnake));
       life.startTiming();
-      snakes.get(currentSnake).setPosition();
+      snakes.get(currentSnake).setPosition(currentSnakePosition);
       currentSnake++;
     }
     
     if(snakes.size() <= currentSnake) {
-      nextGeneration();
-      currentGeneration++;
+      if(saveCurrentGen){  
+        String fileName = 'G'+str(currentGeneration)+"_"+str(currentSnake);
+        saveGeneration(savePath + fileName);
+        println(fileName + " saved");
+        saveCurrentGen = false;
+      }
+      if(loadNextGen){
+        currentGeneration = 0;
+        loadNextGen = false;
+        loadGeneration();
+      } else {
+        nextGeneration();
+        life.NewMousePositions();
+        currentGeneration++;
+      }
     }
     
     writeGenInfo();
   };
   
+  void loadGeneration(){
+    BufferedReader in = createReader(loadGen.getAbsolutePath());
+    snakes.clear();
+    String line = null;
+    try{
+      while((line = in.readLine()) != null)
+        snakes.add(new Snake(line));
+      in.close();
+    } catch(IOException e){
+      e.printStackTrace();
+    }
+  }
+  
+  void saveGeneration(String fName){ //<>//
+    PrintWriter out = createWriter(fName);
+    for(Snake snek : snakes)
+      out.println(snek.Serialize());
+    out.flush();
+    out.close();
+  };
+  
   void nextGeneration() {
+    currentSnakePosition = new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin)));
+    
     double fitnessSum=0, curSum, fitnessRoll;
     for(int i=0; i<fitnesses.size(); i++)
       if(fitnesses.get(i) < 1e-3)
@@ -83,7 +123,7 @@ class Habitat {
               break;
             }
           }
-        } //<>//
+        } 
         else {
           int i = (int)random(snakes.size());
           //fitnessSum -= fitnesses.get(i);

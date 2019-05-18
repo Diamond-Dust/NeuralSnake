@@ -74,7 +74,7 @@ class Brain {
         inputp.set(0, i, 1 - logistic(Memory[rayNumber-1-i], 1./100, 0, 1));
     yp=HalfFeedForward(inputp);
     
-    //println("..",yp,"-",yl,"=",yp-yl," then to ", logistic((yp-yl), 5, 0, 1)); //<>//
+    //println("..",yp,"-",yl,"=",yp-yl," then to ", logistic((yp-yl), 5, 0, 1)); //<>// //<>//
     return (float)logistic((yp-yl), 5, 0, 1);
     
   }
@@ -105,9 +105,14 @@ class Brain {
   
   void GetSightings(float[][] sightings) {
     if(!IsInputEmpty(sightings)){
+<<<<<<< HEAD
       for(int i=0; i<rayNumber; i++)
         Memory[i] = sightings[i][0];
     }
+=======
+      Memory = sightings; 
+    } 
+>>>>>>> develop_mouseplace
   };
   
   double logistic(double x, double k, double mid, double max){

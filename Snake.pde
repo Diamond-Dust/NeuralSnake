@@ -53,6 +53,27 @@ public class Snake extends Creature{
     Coords.add(headPosition.clone());
     brain = new Brain(true);
   };
+  Snake(String data) {
+    String [] values = data.split(";");
+    int index = 0;
+    
+    l = Float.parseFloat(values[index++]);
+    v = Float.parseFloat(values[index++]);
+    phi = Float.parseFloat(values[index++]);
+    m = Float.parseFloat(values[index++]);
+    
+    FOVColor = headColor = color(0, int(random(128, 255)), 0);
+    tailColor = color(0, 0, int(random(128, 255)));
+    
+    Coords.add(headPosition.clone());
+    brain = new Brain(true);
+    for(Matrix s : brain.S){
+      for(int i=0; i<s.getRowDimension(); i++)
+        for(int j=0; j<s.getColumnDimension(); j++){
+           s.set(i, j, Double.parseDouble(values[index++]));
+         }
+    }
+  };
   Snake(Snake Parent) {
     super();
     // This creates very fast creatures, needs to be looked into
@@ -95,7 +116,7 @@ public class Snake extends Creature{
         curveVertex(Coords.get(i).x, Coords.get(i).y);
         distance += sqrt(sq(Coords.get(i).x - Coords.get(i+1).x)+sq(Coords.get(i).y - Coords.get(i+1).y));
         if(distance >= l)
-        {
+        { //<>//
           for(; i>-1; i--)
           {
             Coords.remove(0);
@@ -122,12 +143,12 @@ public class Snake extends Creature{
   }
   
   //Does that pass through?
-  boolean IsPassedThrough(Point start, Point end, boolean DoDraw) { //<>//
+  boolean IsPassedThrough(Point start, Point end, boolean DoDraw) { 
     if(Coords.size() < 2)
       return false;
     else
     {
-      Point P; //<>//
+      Point P; 
       Segment snakePart = new Segment(), checkedPart = new Segment(start, end);
       for(int i=0; i<Coords.size()-1; i++)
       {
@@ -167,4 +188,27 @@ public class Snake extends Creature{
     return false;
   };
   
+  String Serialize(){
+    // float L, float V, float Phi, float M
+    StringBuilder me = new StringBuilder("");
+    
+    // Snake characteristics
+    me.append(l);
+    me.append(';');
+    me.append(v);
+    me.append(';');
+    me.append(phi);
+    me.append(';');
+    me.append(m);
+    me.append(';');
+    // Brain characteristics
+    for(Matrix s : brain.S){
+      for(int i=0; i<s.getRowDimension(); i++)
+        for(int j=0; j<s.getColumnDimension(); j++){
+           me.append(s.get(i, j));
+           me.append(';');
+         }
+    }
+    return me.toString();
+  }
 };
