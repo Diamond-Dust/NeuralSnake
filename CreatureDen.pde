@@ -30,7 +30,7 @@ class CreatureDen {
   CreatureDen(ArrayList<Snake> snakes, Mouse mouse){
     for(Snake s : snakes)
       creatures.add(s);
-    creatures.add(mouse);
+    creatures.add(mouse); //<>//
   };
   CreatureDen(ArrayList<Snake> snakes, ArrayList<Mouse> mice){
     for(Snake s : snakes)
@@ -40,7 +40,7 @@ class CreatureDen {
   };
   
   void update(boolean DoDraw) {
-    boolean CanGoAhead; //<>// //<>// //<>// //<>//
+    boolean CanGoAhead; //<>// //<>// //<>// //<>// //<>//
     Point currentHeadPosition, futureHeadPosition;
     Creature currentCreature, currentPossibleSnake;
     ArrayList<Sighting> Sightings = new ArrayList<Sighting>();
@@ -129,21 +129,9 @@ class CreatureDen {
   
   void IncreaseFitnessFromAreaTravelled() {
     Creature currentPossibleSnake = creatures.get(0);
-    float area = (currentPossibleSnake.maxX - currentPossibleSnake.minX) * (currentPossibleSnake.maxY - currentPossibleSnake.minY);
-    currentPossibleSnake.minX = size[0]+1;
-    currentPossibleSnake.minY = size[1]+1;
-    currentPossibleSnake.maxX = -1;
-    currentPossibleSnake.maxY = -1;
-    area /= (float)(size[1]*size[0]);             //  (0 ; 1)
-    if(area < 0.004) {
-      currentPossibleSnake.SetFitness(0.);
-      return;
+    if(!currentPossibleSnake.hasReactedToInput){
+      currentPossibleSnake.MultiplyFitness(0.1);
     }
-    area = log(area+1);                           //  (0 ; log(2))
-    area /= log(2);                               //  (0 ; 1)
-    area = sqrt(area);                            //  (0 ; 1)
-    area *= areaFitnessScale;                     //  (0 ; areaFitnessScale)
-    currentPossibleSnake.IncreaseFitness(area);
   }
   
   float getFitness() {

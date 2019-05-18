@@ -74,8 +74,8 @@ class Brain {
         inputp.set(0, i, 1 - logistic(Memory[rayNumber-1-i], 1./100, 0, 1));
     yp=HalfFeedForward(inputp);
     
-    println("..",yp,"-",yl,"=",yp-yl," then to ", logistic((yp-yl), 1, 0, 1)); //<>//
-    return (float)logistic((yp-yl), 1e6d, 0, 1);
+    //println("..",yp,"-",yl,"=",yp-yl," then to ", logistic((yp-yl), 5, 0, 1)); //<>//
+    return (float)logistic((yp-yl), 5, 0, 1);
     
   }
   
@@ -115,7 +115,7 @@ class Brain {
     return max / (1.0d + (double) Math.exp(-k*(x-mid)));
   }
   double sigmoid(double x){
-    return 1.0d / (1.0d + (double) Math.exp(-x));
+    return logistic(x, 1, 0, 1);
   }
   
 };
