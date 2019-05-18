@@ -1,10 +1,12 @@
 import Jama.*; // Java matrix
 
+public String savePath = "./snakes/";
+
 public int size[] = {640, 360};
 public color backgroundColor = #777777;
 public int rayNumber = 10;
 public int FOVBaseSize = 50;
-public int drawGenerationEvery = 20;
+public int drawGenerationEvery = 1;
 public float safetyMargin = 10.;
 public float sightInterval = 5.;
 public float consumptionDistance = 15.;
@@ -23,6 +25,7 @@ void setup() {
 }
 
 public boolean wait = true;
+public boolean saveCurrentGen = false;
 
 void draw() { 
   if(!wait) {
@@ -34,6 +37,10 @@ void draw() {
 }
 
 void keyPressed() {
-  wait = false;
-  frameRate(30*1000);
+  if(key == 's' || key == 'S'){
+    saveCurrentGen = true;
+  } else {
+     wait = false;
+    frameRate(30*1000);
+  }
 }

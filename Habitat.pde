@@ -46,11 +46,25 @@ class Habitat {
     }
     
     if(snakes.size() <= currentSnake) {
+      if(saveCurrentGen){  
+        String fileName = 'G'+str(currentGeneration)+"_"+str(currentSnake);
+        saveGeneration(savePath + fileName);
+        println(fileName + " saved");
+        saveCurrentGen = false;
+      }
       nextGeneration();
       currentGeneration++;
     }
     
     writeGenInfo();
+  };
+  
+  void saveGeneration(String fName){
+    PrintWriter out = createWriter(fName);
+    for(Snake snek : snakes)
+      out.println(snek.Serialize());
+    out.flush();
+    out.close();
   };
   
   void nextGeneration() {

@@ -167,4 +167,27 @@ public class Snake extends Creature{
     return false;
   };
   
+  String Serialize(){
+    // float L, float V, float Phi, float M
+    StringBuilder me = new StringBuilder("");
+    
+    // Snake characteristics
+    me.append(l);
+    me.append(';');
+    me.append(v);
+    me.append(';');
+    me.append(phi);
+    me.append(';');
+    me.append(m);
+    me.append(';');
+    // Brain characteristics
+    for(Matrix s : brain.S){
+      for(int i=0; i<s.getRowDimension(); i++)
+        for(int j=0; j<s.getColumnDimension(); j++){
+           me.append(s.get(i, j));
+           me.append(';');
+         }
+    }
+    return me.toString();
+  }
 };
