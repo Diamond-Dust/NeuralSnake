@@ -107,8 +107,31 @@ abstract class Creature implements Hoverable {
   void update(boolean CanGoAhead, boolean DoDraw) {
     if(CanGoAhead) {
       courseAngle = (courseAngle+delta)%(2*PI);
-      headPosition.x = min(max(0, headPosition.x+v*cos(courseAngle)), size[0]);
-      headPosition.y = min(max(0, headPosition.y+v*sin(courseAngle)), size[1]);
+      Point newHead = headPosition.clone();
+      newHead.x = headPosition.x+v*cos(courseAngle);
+      newHead.y = headPosition.y+v*sin(courseAngle);
+      if(newHead.x < 0) {
+        headPosition.x = 0;
+        courseAngle = 0;
+      } 
+      else if (newHead.x > size[0]) {
+        headPosition.x = size[0];
+        courseAngle = PI;
+      }
+      else {
+        headPosition.x = newHead.x;
+      }
+      if(newHead.y < 0) {
+        headPosition.y = 0;
+        courseAngle = PI/2;
+      } 
+      else if (newHead.y > size[1]) {
+        headPosition.y = size[1];
+        courseAngle = PI+PI/2;
+      } 
+      else {
+        headPosition.y = newHead.y;
+      }
     }
     
     if(DoDraw) {
