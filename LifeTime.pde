@@ -43,7 +43,7 @@ class LifeTime {
   
   float popFitness() {
     den.increaseFitnessFromMouseDistance();
-    den.IncreaseFitnessFromAreaTravelled();
+    den.CheckIfReacted();
     float fit = den.getFitness();
     println("    ", fit);
     den.resetFitness();

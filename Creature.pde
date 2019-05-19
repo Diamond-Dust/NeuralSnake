@@ -61,7 +61,7 @@ abstract class Creature implements Hoverable {
     headPosition = new Point(int(random(safetyMargin, size[0])), int(random(safetyMargin, size[1])));
   };
   void setPosition(Point head) {
-    headPosition = head;
+    headPosition = head.clone();
   };
   void setPosition(float X, float Y) {
     headPosition.x = X;

@@ -83,7 +83,7 @@ class CreatureDen {
           if(currentCreature instanceof Snake && currentPossibleSnake instanceof Mouse 
             && currentCreature.headPosition.DistanceTo(currentPossibleSnake.headPosition) < consumptionDistance) {
             currentCreature.miceCaught++;
-            currentCreature.IncreaseFitness(20*currentCreature.miceCaught);
+            currentCreature.IncreaseFitness(mouseFitnesBounty*currentCreature.miceCaught);
             creatures.remove(j);
             creatures.add(new Mouse(mousePositions.get(currentMouseIndex)));
             currentMouseIndex++;
@@ -148,7 +148,7 @@ class CreatureDen {
     
   };
   
-  void IncreaseFitnessFromAreaTravelled() {
+  void CheckIfReacted() {
     Creature currentPossibleSnake = creatures.get(0);
     if(!currentPossibleSnake.hasReactedToInput){
       currentPossibleSnake.MultiplyFitness(0.1);
