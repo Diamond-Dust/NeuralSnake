@@ -47,6 +47,6 @@ void keyPressed() {
     selectInput("Select file containing valid generation info:", "loadGeneration");
   } else {
      wait = false;
-    frameRate(30*1000);
+    //frameRate(30*1000);
   }
 }
