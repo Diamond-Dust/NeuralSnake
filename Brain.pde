@@ -74,7 +74,7 @@ class Brain {
     }
       
     out = out.times(S[S.length-1]);          // Output is 1 x 1 matrix
-    return sigmoid(out.get(0,0)); //<>// //<>//
+    return sigmoid(out.get(0,0)); //<>// //<>// //<>//
   }
   
   boolean IsInputEmpty(float[][] input) {
@@ -106,7 +106,7 @@ class Brain {
     PrintWriter log = createWriter("Err.log");
     
     float dw = 0.02;
-    int max_epochs = 2000;
+    int max_epochs = 10000;
     double cost = calculateCost(X_in, Target);
     while(max_epochs > 0 && cost > 0.1){
       Matrix S_0 = S[0].copy();

@@ -19,7 +19,7 @@ Habitat hub = new Habitat(1, 5, 200);
 
 void settings() { 
   size(size[0], size[1]);
-  in = createReader("./t_data/training_data_5k");
+  in = createReader("./t_data/training_data_10k");
 }
 
 void setup() {
