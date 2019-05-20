@@ -31,7 +31,7 @@ public class Snake extends Creature{
   };
 
   Snake() {
-    super( random(PI/8, 2*PI),  LToVTimesPhiFToLConstant );
+    super( random(PI/3, 2*PI),  LToVTimesPhiFToLConstant );
     l = LToVConstant / v;
     m = random(0.0, 1.0);
     
@@ -116,7 +116,7 @@ public class Snake extends Creature{
         curveVertex(Coords.get(i).x, Coords.get(i).y);
         distance += sqrt(sq(Coords.get(i).x - Coords.get(i+1).x)+sq(Coords.get(i).y - Coords.get(i+1).y));
         if(distance >= l)
-        { //<>//
+        { //<>// //<>//
           for(; i>-1; i--)
           {
             Coords.remove(0);

@@ -83,7 +83,7 @@ class Habitat {
     }
   }
   
-  void saveGeneration(String fName){ //<>//
+  void saveGeneration(String fName){ //<>// //<>//
     PrintWriter out = createWriter(fName);
     for(Snake snek : snakes)
       out.println(snek.Serialize());
@@ -100,6 +100,8 @@ class Habitat {
         fitnesses.set(i, 0.0);
     fitnessSum = fitnesses.sum();
     ArrayList<Snake> newGeneration = new ArrayList<Snake>();
+    int childrenSum=0, childrenCount[] = new int[fitnesses.size()];
+    
     print(fitnessSum + "\n");
     if(fitnessSum <= 1e-3) {
       print("Generation " + currentGeneration + " unusable\n");
@@ -108,37 +110,48 @@ class Habitat {
       }
     }
     else {
-      while(newGeneration.size() < population/2 + population%2) {
+      while(childrenSum < population) {
         if(fitnessSum > 1e-3) {
           fitnessRoll = random((float)fitnessSum);
           curSum = 0;
           for(int i=0; i<snakes.size(); i++){
             curSum = curSum + fitnesses.get(i);
             if(curSum >= fitnessRoll) {
-              //fitnessSum -= fitnesses.get(i);
-              newGeneration.add(snakes.get(i));
-              snakes.get(i).Coords.clear();
-              //snakes.remove(i);
-              //fitnesses.remove(i);
+              if(childrenCount[i] == 0)
+                childrenSum++;
+              childrenCount[i]++;
+              childrenSum++;
+              //newGeneration.add(snakes.get(i));
+              //snakes.get(i).Coords.clear();
               break;
             }
           }
         } 
         else {
           int i = (int)random(snakes.size());
-          //fitnessSum -= fitnesses.get(i);
-          newGeneration.add(snakes.get(i));
-          snakes.get(i).Coords.clear();
-          //snakes.remove(i);
-          //fitnesses.remove(i);
+          if(childrenCount[i] == 0)
+            childrenSum++;
+          childrenCount[i]++;
+          childrenSum++;
+          //newGeneration.add(snakes.get(i));
+          //snakes.get(i).Coords.clear();
         }
       }
       
-      int parent_index = 0;
+      for(int i=0; i<fitnesses.size(); i++) {
+        if(childrenCount[i] > 0) {
+          newGeneration.add(snakes.get(i));
+          while(childrenCount[i]--> 0) {
+            newGeneration.add(new Snake(snakes.get(i)));
+          }
+        }
+      }
+      
+      /*int parent_index = 0;
       while(newGeneration.size() < population) {
         newGeneration.add(new Snake(newGeneration.get(parent_index))); 
         parent_index += 1;
-      }
+      }*/
     }
      
     fitnesses.clear(); 
