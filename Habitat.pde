@@ -26,7 +26,7 @@ class Habitat {
     population = numOfSnakes;
     fitnesses = new FloatList(numOfSnakes);
     for(int i=0; i<numOfSnakes; i++){
-      snakes.add(new Snake());
+      snakes.add(new Snake(135.0, 3.6, 3.4, 0.6));
     }
     life.setSpecimen(snakes.get(0));
   };
@@ -83,7 +83,7 @@ class Habitat {
           for(int i=0; i<snakes.size(); i++){
             curSum = curSum + fitnesses.get(i);
             if(curSum >= fitnessRoll) {
-              fitnessSum -= fitnesses.get(i);
+              fitnessSum -= fitnesses.get(i); //<>//
               newGeneration.add(snakes.get(i));
               snakes.get(i).Coords.clear();
               snakes.remove(i);
