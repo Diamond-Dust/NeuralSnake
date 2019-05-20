@@ -30,7 +30,7 @@ class CreatureDen {
     for(int i=0; i<numberOfMice; i++) {
       mousePositions.add( new Point(int(random(safetyMargin, size[0]-safetyMargin)), int(random(safetyMargin, size[1]-safetyMargin))) );
       creatures.add(new Mouse(mousePositions.get(i)));
-    } //<>//
+    } //<>// //<>//
   };
   CreatureDen(Snake specimen, int numberOfMice, ArrayList<Point> MousePositions) {
     currentMouseIndex = 0;
@@ -40,7 +40,7 @@ class CreatureDen {
       creatures.add(new Mouse(mousePositions.get(i)));
     }
   };
-  CreatureDen(Snake snake, Mouse mouse){ //<>//
+  CreatureDen(Snake snake, Mouse mouse){ //<>// //<>//
     creatures.add(snake);
     creatures.add(mouse);
   };
@@ -83,7 +83,7 @@ class CreatureDen {
           if(currentCreature instanceof Snake && currentPossibleSnake instanceof Mouse 
             && currentCreature.headPosition.DistanceTo(currentPossibleSnake.headPosition) < consumptionDistance) {
             currentCreature.miceCaught++;
-            currentCreature.IncreaseFitness(20*currentCreature.miceCaught);
+            currentCreature.IncreaseFitness(mouseFitnessBounty*currentCreature.miceCaught); //<>//
             creatures.remove(j);
             creatures.add(new Mouse(mousePositions.get(currentMouseIndex)));
             currentMouseIndex++;
@@ -154,7 +154,7 @@ class CreatureDen {
   void IncreaseFitnessFromAreaTravelled() {
     Creature currentPossibleSnake = creatures.get(0);
     float area = (currentPossibleSnake.maxX - currentPossibleSnake.minX) * (currentPossibleSnake.maxY - currentPossibleSnake.minY);
-    currentPossibleSnake.minX = size[0]+1;
+    currentPossibleSnake.minX = size[0]+1; //<>//
     currentPossibleSnake.minY = size[1]+1;
     currentPossibleSnake.maxX = -1;
     currentPossibleSnake.maxY = -1;

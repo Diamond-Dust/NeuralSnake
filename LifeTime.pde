@@ -43,7 +43,7 @@ class LifeTime {
   
   float popFitness() {
     den.increaseFitnessFromMouseDistance();
-    den.IncreaseFitnessFromAreaTravelled();
+    //den.IncreaseFitnessFromAreaTravelled();
     float fit = den.getFitness();
     println("    ", fit);
     den.resetFitness();
@@ -53,8 +53,8 @@ class LifeTime {
   boolean update(boolean DoDraw) {
     if(!DoDraw) {
        for(currentTime = 0; allowedTime > currentTime; currentTime += timeEpsilon) {
-         den.increaseFitnessFromMouseDistance();
          den.update(DoDraw);
+         den.increaseFitnessFromMouseDistance();
          }
     }
     if(allowedTime == -1) {
