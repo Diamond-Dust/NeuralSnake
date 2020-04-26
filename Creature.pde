@@ -8,6 +8,7 @@ abstract class Creature implements Hoverable {
   float delta = PI/90, courseAngle = 0;
   
   float fitness = 0;
+  int miceCaught;
   
   Ray[] Rays = new Ray[rayNumber];
   
@@ -20,6 +21,9 @@ abstract class Creature implements Hoverable {
     for (int i=0; i<rayNumber; i++) {
       Rays[i] = new Ray();
     }
+    fitness = 0;
+    lastOutput = 0;
+    miceCaught= 0;
   };
   Creature(float Phi, float LToVTimesPhiFToLConstant) {
     phi = Phi;
@@ -28,6 +32,9 @@ abstract class Creature implements Hoverable {
     for (int i=0; i<rayNumber; i++) {
       Rays[i] = new Ray();
     }
+    fitness = 0;
+    lastOutput = 0;
+    miceCaught= 0;
   }
   
   float getV() {
@@ -40,15 +47,21 @@ abstract class Creature implements Hoverable {
     return f;
   };
   
+  void SetFitness(float F) {
+    fitness = F;
+  };
+  void MultiplyFitness(float F) {
+    fitness *= F;
+  };
   void IncreaseFitness(float By) {
-    fitness += By;
+    fitness += By; 
   };
   
   void setPosition() {
     headPosition = new Point(int(random(safetyMargin, size[0])), int(random(safetyMargin, size[1])));
   };
   void setPosition(Point head) {
-    headPosition = head;
+    headPosition = head.clone();
   };
   void setPosition(float X, float Y) {
     headPosition.x = X;
@@ -86,36 +99,76 @@ abstract class Creature implements Hoverable {
     headPosition.Draw(headColor, 5);
   };
   
-  void update(boolean CanGoAhead) {
+  
+  boolean hasReactedToInput = false;
+  float lastOutput;
+  int skip = 5;
+  
+  void update(boolean CanGoAhead, boolean DoDraw) {
     if(CanGoAhead) {
       courseAngle = (courseAngle+delta)%(2*PI);
-      headPosition.x = min(max(0, headPosition.x+v*cos(courseAngle)), size[0]);
-      headPosition.y = min(max(0, headPosition.y+v*sin(courseAngle)), size[1]);
+      Point newHead = headPosition.clone();
+      newHead.x = headPosition.x+v*cos(courseAngle);
+      newHead.y = headPosition.y+v*sin(courseAngle);
+      if(newHead.x < 0) {
+        headPosition.x = 0;
+        courseAngle = 0;
+      } 
+      else if (newHead.x > size[0]) {
+        headPosition.x = size[0];
+        courseAngle = PI;
+      }
+      else {
+        headPosition.x = newHead.x;
+      }
+      if(newHead.y < 0) {
+        headPosition.y = 0;
+        courseAngle = PI/2;
+      } 
+      else if (newHead.y > size[1]) {
+        headPosition.y = size[1];
+        courseAngle = PI+PI/2;
+      } 
+      else {
+        headPosition.y = newHead.y;
+      }
     }
     
-    DrawFOV();  
-    DrawHead();
-  
-    this.setAngle(brain.DecideAngle());
+    if(DoDraw) {
+      DrawFOV();  
+      DrawHead();
+    }
+    if(lastOutput != 0 && skip < 0) {
+      float curOutput = brain.DecideAngle();
+      if(abs(lastOutput - curOutput) >1e-6){
+        hasReactedToInput = true;
+      }
+      lastOutput = curOutput;
+    }
+    else{
+      lastOutput = brain.DecideAngle();
+      skip--;
+    }
+    this.setAngle(lastOutput);
   };
   
-  void GetSightings(ArrayList<Sighting> Sightings) {
+  void GetSightings(float[][] Sightings) {
     brain.GetSightings(Sightings);
   };
   
-  public boolean IsSeen(Creature C) {
-    boolean IS = false;
+  public int IsSeenByRay(Creature C) {
+    int IS = -1;
     for(int i=0; i< rayNumber; i++) {
       if(Rays[i].CheckIfInFrontAndInInterval(C.headPosition, sightInterval))
-        IS = true;
+        IS = i;
     }
     return IS;
   };
-  public boolean IsSeen(Point P) {
-    boolean IS = false;
+  public int IsSeenByRay(Point P) {
+    int IS = -1;
     for(int i=0; i< rayNumber; i++) {
       if(Rays[i].CheckIfInFrontAndInInterval(P, sightInterval))
-        IS = true;
+        IS = i;
     }
     return IS;
   };
